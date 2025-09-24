@@ -22,7 +22,7 @@
 
 module alu #(parameter WIDTH = 8)
 (
-input wire [WIDTH-1:0] dataa,datab,
+input signed [WIDTH-1:0] dataa,datab,
 input wire [5:0] opcode,
 output reg [WIDTH-1:0] result,
 output reg zero, carry
@@ -40,6 +40,6 @@ case (opcode)
     6'b100111: {carry, result} = {{1'b0}, ~(dataa | datab)};        
     default:   {carry, result} = {{1'b0}, {WIDTH{1'b0}}};
 endcase
-zero = (result & {WIDTH{1'b0}});
+zero = ~(|result);
 end
 endmodule

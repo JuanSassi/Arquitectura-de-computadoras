@@ -1,0 +1,17 @@
+Time resolution is 1 ps
+Starting ALU testbench...
+PASS:          ADD 3+5 | result=08 zero=0 carry=0
+FAIL: D 255+1 overflow | got result=00 zero=1 carry=0, expected result=00 zero=1 carry=1
+PASS:          SUB 7-2 | result=05 zero=0 carry=0
+PASS: UB 2-5 underflow | result=fd zero=0 carry=1
+PASS:         AND test | result=a0 zero=0 carry=0
+PASS:          OR test | result=ff zero=0 carry=0
+PASS: identical inputs | result=00 zero=1 carry=0
+PASS:         NOR test | result=00 zero=1 carry=0
+PASS:  SRL shift right | result=40 zero=0 carry=0
+PASS:   SRL full shift | result=00 zero=1 carry=0
+PASS:  negative extend | result=c0 zero=0 carry=0
+PASS:  positive extend | result=3f zero=0 carry=0
+PASS: ode default to 0 | result=00 zero=1 carry=0
+All tests finished.
+$stop called at time : 13 ns : File "C:/TP1/TP1.srcs/sim_1/new/sim.v" Line 94

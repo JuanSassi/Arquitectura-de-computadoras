@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-| Date         : Tue Sep 23 18:26:03 2025
+| Date         : Wed Sep 24 09:13:58 2025
 | Host         : DESKTOP-KPIS19S running 64-bit major release  (build 9200)
 | Command      : report_methodology -file top_methodology_drc_routed.rpt -pb top_methodology_drc_routed.pb -rpx top_methodology_drc_routed.rpx
 | Design       : top
@@ -23,11 +23,11 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max checks: <unlimited>
-             Checks found: 21
+             Checks found: 22
 +-----------+----------+-------------------------------+--------+
 | Rule      | Severity | Description                   | Checks |
 +-----------+----------+-------------------------------+--------+
-| TIMING-18 | Warning  | Missing input or output delay | 21     |
+| TIMING-18 | Warning  | Missing input or output delay | 22     |
 +-----------+----------+-------------------------------+--------+
 
 2. REPORT DETAILS
@@ -135,6 +135,11 @@ Related violations: <none>
 TIMING-18#21 Warning
 Missing input or output delay  
 An output delay is missing on led[7] relative to the rising and/or falling clock edge(s) of sys_clk_pin.
+Related violations: <none>
+
+TIMING-18#22 Warning
+Missing input or output delay  
+An output delay is missing on zero_led relative to the rising and/or falling clock edge(s) of sys_clk_pin.
 Related violations: <none>
 
 

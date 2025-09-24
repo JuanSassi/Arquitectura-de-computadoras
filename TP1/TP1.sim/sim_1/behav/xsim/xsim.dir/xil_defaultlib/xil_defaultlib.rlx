@@ -1,9 +1,9 @@
 0.7
 2020.2
-May 21 2025
-22:59:56
-/home/franco/TP1/TP1.sim/sim_1/behav/xsim/glbl.v,1741209010,verilog,,,,glbl,,,,,,,,
-/home/franco/TP1/TP1.srcs/sim_1/new/sim.v,1758478046,verilog,,,,sim,,,../../../../../Xilinx/2025.1/data/rsb/busdef,,,,,
-/home/franco/TP1/TP1.srcs/sources_1/new/alu.v,1758545250,verilog,,/home/franco/TP1/TP1.srcs/sources_1/new/register.v,,alu,,,../../../../../Xilinx/2025.1/data/rsb/busdef,,,,,
-/home/franco/TP1/TP1.srcs/sources_1/new/register.v,1758473805,verilog,,/home/franco/TP1/TP1.srcs/sources_1/new/top.v,,register,,,../../../../../Xilinx/2025.1/data/rsb/busdef,,,,,
-/home/franco/TP1/TP1.srcs/sources_1/new/top.v,1758474969,verilog,,/home/franco/TP1/TP1.srcs/sim_1/new/sim.v,,top,,,../../../../../Xilinx/2025.1/data/rsb/busdef,,,,,
+May 22 2025
+00:13:55
+C:/TP1/TP1.sim/sim_1/behav/xsim/glbl.v,1741209010,verilog,,,,glbl,,,,,,,,
+C:/TP1/TP1.srcs/sim_1/new/sim.v,1758716522,verilog,,,,top_tb,,,../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
+C:/TP1/TP1.srcs/sources_1/new/alu.v,1758715904,verilog,,C:/TP1/TP1.srcs/sources_1/new/register.v,,alu,,,../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
+C:/TP1/TP1.srcs/sources_1/new/register.v,1758473805,verilog,,C:/TP1/TP1.srcs/sources_1/new/top.v,,register,,,../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
+C:/TP1/TP1.srcs/sources_1/new/top.v,1758662646,verilog,,C:/TP1/TP1.srcs/sim_1/new/sim.v,,top,,,../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,

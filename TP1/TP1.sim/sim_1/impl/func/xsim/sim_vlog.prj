@@ -1,0 +1,7 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" \
+"sim_func_impl.v" \
+"../../../../../TP1.srcs/sim_1/new/sim.v" \
+
+# Do not sort compile order
+nosort

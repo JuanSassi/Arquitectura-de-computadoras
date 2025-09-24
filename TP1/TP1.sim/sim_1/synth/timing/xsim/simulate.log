@@ -1,17 +1,22 @@
 Time resolution is 1 ps
-Starting ALU testbench...
-PASS:          ADD 3+5 | result=08 zero=0 carry=0
-FAIL: D 255+1 overflow | got result=00 zero=0 carry=1, expected result=00 zero=1 carry=1
-PASS:          SUB 7-2 | result=05 zero=0 carry=0
-PASS: UB 2-5 underflow | result=fd zero=0 carry=1
-PASS:         AND test | result=a0 zero=0 carry=0
-PASS:          OR test | result=ff zero=0 carry=0
-FAIL: identical inputs | got result=00 zero=0 carry=0, expected result=00 zero=1 carry=0
-FAIL:         NOR test | got result=00 zero=0 carry=0, expected result=00 zero=1 carry=0
-PASS:  SRL shift right | result=40 zero=0 carry=0
-FAIL:   SRL full shift | got result=00 zero=0 carry=0, expected result=00 zero=1 carry=0
-FAIL:  negative extend | got result=40 zero=0 carry=0, expected result=c0 zero=0 carry=0
-PASS:  positive extend | result=3f zero=0 carry=0
-FAIL: ode default to 0 | got result=00 zero=0 carry=0, expected result=00 zero=1 carry=0
-All tests finished.
-$stop called at time : 13 ns : File "/home/franco/TP1/TP1.srcs/sim_1/new/sim.v" Line 94
+=== Starting signed ALU testbench ===
+PASS:        ADD 3 + 5 | result=8 (0x08) zero=0 carry=0
+PASS:  100 + 30 = -126 | result=-126 (0x82) zero=0 carry=0
+PASS: rflow -100 + -50 | result=106 (0x6a) zero=0 carry=1
+PASS:        SUB 7 - 2 | result=5 (0x05) zero=0 carry=0
+PASS:  5 = -3 (borrow) | result=-3 (0xfd) zero=0 carry=1
+PASS: - 1 wraps to 127 | result=127 (0x7f) zero=0 carry=1
+PASS:         AND test | result=-96 (0xa0) zero=0 carry=0
+PASS:          OR test | result=-1 (0xff) zero=0 carry=0
+PASS: dentical -> zero | result=0 (0x00) zero=1 carry=0
+PASS: OR complementary | result=-1 (0xff) zero=0 carry=0
+PASS:      NOR -> zero | result=0 (0x00) zero=1 carry=0
+PASS:        NOR of 0s | result=-1 (0xff) zero=0 carry=0
+PASS:    SRL 0x80 >> 1 | result=64 (0x40) zero=0 carry=0
+PASS:  full shift -> 0 | result=0 (0x00) zero=1 carry=0
+PASS: 128 >>> 1 -> -64 | result=-64 (0xc0) zero=0 carry=0
+PASS:  127 >>> 1 -> 63 | result=63 (0x3f) zero=0 carry=0
+PASS: -1 (sign extend) | result=-1 (0xff) zero=0 carry=0
+PASS: d opcode -> zero | result=0 (0x00) zero=1 carry=0
+=== All tests finished ===
+$stop called at time : 18 ns : File "C:/TP1/TP1.srcs/sim_1/new/sim.v" Line 108

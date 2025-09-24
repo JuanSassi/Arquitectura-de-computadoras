@@ -1,5 +1,6 @@
 0.7
 2020.2
-May 21 2025
-22:59:56
-/home/franco/TP1/TP1.sim/sim_1/impl/func/xsim/top_func_impl.v,1758477663,verilog,,,,alu;glbl;register;register_0;register__parameterized0;top,,,../../../../../../Xilinx/2025.1/data/rsb/busdef,,,,,
+May 22 2025
+00:13:55
+C:/TP1/TP1.sim/sim_1/impl/func/xsim/sim_func_impl.v,1758717132,verilog,,C:/TP1/TP1.srcs/sim_1/new/sim.v,,alu;glbl;register;register_0;register__parameterized0;top,,,../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
+C:/TP1/TP1.srcs/sim_1/new/sim.v,1758717076,verilog,,,,sim,,,../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
