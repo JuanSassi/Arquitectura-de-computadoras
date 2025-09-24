@@ -1,0 +1,126 @@
+# Vivado Project Files
+# Ignore all Vivado project files except source files and constraints
+
+# Vivado project files
+*.xpr.backup
+*.xpr~
+*.xpr.orig
+*.xpr.rej
+*.backup
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.tmp/
+
+# Vivado log files
+vivado.log
+vivado.jou
+vivado_pid*.str
+webtalk.log
+webtalk.jou
+hs_err_pid*.log
+
+# Implementation and synthesis results
+*.runs/
+*.cache/
+*.hw/
+*.sim/
+
+# IP files (keep only the .xci files, ignore generated files)
+*.ip_user_files/
+component.xml
+
+# Checkpoint files
+*.dcp
+
+# Bitstream files (comment out if you want to keep them)
+*.bit
+*.bin
+*.mcs
+*.prm
+
+# Simulation files
+*.wdb
+*.wcfg
+*.vcd
+*.ghw
+*.fst
+*.fstw
+*.wlf
+*.vstf
+
+# Reports
+*.rpt
+*.rpx
+*.drc
+*.txt
+*.xml
+*.html
+*.pb
+
+# Debug files
+*.ltx
+
+# OS generated files
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Temporary files
+*~
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Windows specific
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux specific
+*~
+.nfs*
+
+# Python bytecode (if using Python scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Keep these files (override some of the above patterns for essential files)
+!*.xdc
+!*.v
+!*.vhd
+!*.vhdl
+!*.sv
+!*.svh
+!*.xci
+!*.tcl
+!*.mem
+!*.coe
+!*.mif
+
+# Keep constraint files
+!constrs_*/
+
+# Keep source files
+!sources_*/
+
+# Keep simulation source files
+!sim_*/
+
