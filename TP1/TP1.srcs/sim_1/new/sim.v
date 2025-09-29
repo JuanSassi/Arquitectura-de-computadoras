@@ -1,6 +1,6 @@
 module sim;
     localparam WIDTH = 8;
-    localparam NUM_RANDOM_TESTS = 100; // Cantidad de pruebas aleatorias
+    localparam NUM_RANDOM_TESTS = 101; // Cantidad de pruebas aleatorias
     
     // DUT inputs
     reg signed [WIDTH-1:0] dataa, datab;
