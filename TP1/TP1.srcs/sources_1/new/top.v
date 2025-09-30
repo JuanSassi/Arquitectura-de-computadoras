@@ -27,7 +27,7 @@ module top (
     input  wire [7:0] sw,  // switch inputs (reused for A, B, or Op loading)
     output wire [7:0] led,      // show ALU result
     output wire zero_led,        // zero flag
-    output wire carry_led       // carry flag
+    output wire overflow_led       // overflow flag
 );
 
     // Internal wires
@@ -70,12 +70,12 @@ module top (
         .opcode(Op),
         .result(Result),
         .zero(Zero),
-        .carry(Carry)
+        .overflow(overflow)
     );
 
     assign led     = Result;
     assign zero_led = Zero;
-    assign carry_led = Carry;
+    assign overflow_led = overflow;
 
 
 endmodule

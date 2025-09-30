@@ -3,12 +3,12 @@
 # SW Build 6140274 on Thu May 22 00:12:29 MDT 2025
 # IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
 # SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
-# Start of session at: Wed Sep 24 09:12:03 2025
-# Process ID         : 14752
-# Current directory  : C:/TP1/TP1.runs/synth_1
+# Start of session at: Wed Sep 24 18:53:54 2025
+# Process ID         : 9772
+# Current directory  : C:/Users/Franco/Documents/GitHub/Arquitectura-de-computadoras/TP1/TP1.runs/synth_1
 # Command line       : vivado.exe -log top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
-# Log file           : C:/TP1/TP1.runs/synth_1/top.vds
-# Journal file       : C:/TP1/TP1.runs/synth_1\vivado.jou
+# Log file           : C:/Users/Franco/Documents/GitHub/Arquitectura-de-computadoras/TP1/TP1.runs/synth_1/top.vds
+# Journal file       : C:/Users/Franco/Documents/GitHub/Arquitectura-de-computadoras/TP1/TP1.runs/synth_1\vivado.jou
 # Running On         : DESKTOP-KPIS19S
 # Platform           : Windows Server 2016 or Windows 10
 # Operating System   : 26100
@@ -19,6 +19,6 @@
 # Host memory        : 8346 MB
 # Swap memory        : 11274 MB
 # Total Virtual      : 19620 MB
-# Available Virtual  : 6879 MB
+# Available Virtual  : 2766 MB
 #-----------------------------------------------------------
 source top.tcl -notrace

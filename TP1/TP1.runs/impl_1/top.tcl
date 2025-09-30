@@ -1,5 +1,5 @@
 namespace eval ::optrace {
-  variable script "C:/TP1/TP1.runs/impl_1/top.tcl"
+  variable script "C:/Users/Franco/Documents/GitHub/Arquitectura-de-computadoras/TP1/TP1.runs/impl_1/top.tcl"
   variable category "vivado_impl"
 }
 
@@ -97,6 +97,9 @@ proc step_failed { step } {
 OPTRACE "impl_1" END { }
 }
 
+set_msg_config  -id {Common 17-180}  -string {{ERROR: [Common 17-180] Spawn failed: The operation completed successfully.}}  -suppress 
+set_msg_config  -id {USF-XSim-62}  -string {{ERROR: [USF-XSim-62] 'compile' step failed with error(s) while executing 'C:/TP1/TP1.sim/sim_1/behav/xsim/compile.bat' script. Please check that the file has the correct 'read/write/execute' permissions and the Tcl console output for any other possible errors or warnings.}}  -suppress 
+set_msg_config  -id {Vivado 12-4473}  -string {{ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.}}  -suppress 
 
 OPTRACE "impl_1" START { ROLLUP_1 }
 OPTRACE "Phase: Init Design" START { ROLLUP_AUTO }
@@ -106,6 +109,7 @@ set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 2
   set_param general.usePosixSpawnForFork 1
+  set_param xicom.use_bs_reader 1
   set_param runs.launchOptions { -jobs 4  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7a35tcpg236-1
@@ -113,15 +117,15 @@ OPTRACE "create in-memory project" START { }
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir C:/TP1/TP1.cache/wt [current_project]
-  set_property parent.project_path C:/TP1/TP1.xpr [current_project]
-  set_property ip_output_repo C:/TP1/TP1.cache/ip [current_project]
+  set_property webtalk.parent_dir C:/Users/Franco/Documents/GitHub/Arquitectura-de-computadoras/TP1/TP1.cache/wt [current_project]
+  set_property parent.project_path C:/Users/Franco/Documents/GitHub/Arquitectura-de-computadoras/TP1/TP1.xpr [current_project]
+  set_property ip_output_repo C:/Users/Franco/Documents/GitHub/Arquitectura-de-computadoras/TP1/TP1.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet C:/TP1/TP1.runs/synth_1/top.dcp
+  add_files -quiet C:/Users/Franco/Documents/GitHub/Arquitectura-de-computadoras/TP1/TP1.runs/synth_1/top.dcp
 OPTRACE "read constraints: implementation" START { }
-  read_xdc C:/TP1/TP1.srcs/constrs_1/new/board_constraints.xdc
+  read_xdc C:/Users/Franco/Documents/GitHub/Arquitectura-de-computadoras/TP1/TP1.srcs/constrs_1/new/board_constraints.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "read constraints: implementation_pre" START { }
 OPTRACE "read constraints: implementation_pre" END { }
