@@ -24,16 +24,16 @@ module top (
     input  wire clk,             // FPGA clock
     input  wire reset,           // global reset (button)
     input  wire enA, enB, enOp,  // enable signals for registers (buttons)
-    input  wire [7:0] sw,  // switch inputs (reused for A, B, or Op loading)
-    output wire [7:0] led,      // show ALU result
+    input  wire signed [7:0] sw,  // switch inputs (reused for A, B, or Op loading)
+    output wire signed [7:0] led,      // show ALU result
     output wire zero_led,        // zero flag
     output wire overflow_led       // overflow flag
 );
 
     // Internal wires
-    wire [7:0] A, B;
+    wire signed [7:0] A, B;
     wire [5:0] Op;
-    wire [7:0] Result;
+    wire signed [7:0] Result;
     wire Zero, Carry;
 
     // Register for A (8 bits)

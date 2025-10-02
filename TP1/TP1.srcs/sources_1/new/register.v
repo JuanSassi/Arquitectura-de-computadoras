@@ -29,7 +29,7 @@ input wire enable,
 output reg [WIDTH-1:0] savedvalue
     );
     
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
     if(reset)
         savedvalue <= {WIDTH{1'b0}};
     else if (enable)

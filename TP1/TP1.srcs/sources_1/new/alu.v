@@ -19,51 +19,61 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+ // cambios params y reset a 11
 
-module alu #(parameter WIDTH = 8)
+module alu #(parameter WIDTH = 8,
+parameter RESET_OUTPUT = 9'h1FF)
 (
 input signed [WIDTH-1:0] dataa,datab,
 input wire [5:0] opcode,
-output reg [WIDTH-1:0] result,
+output reg signed [WIDTH-1:0] result,
 output reg zero, overflow
     );
+    localparam ADD_CODE = 6'b100000;
+    localparam SUB_CODE = 6'b100010;
+    localparam AND_CODE = 6'b100100;
+    localparam OR_CODE = 6'b100101;
+    localparam XOR_CODE = 6'b100110;
+    localparam SRA_CODE = 6'b000011;
+    localparam SRL_CODE = 6'b000010;
+    localparam NOR_CODE = 6'b100111;    
     
 always@ (*) begin
 // complemento a 2
 case (opcode)
-    6'b100000: begin
+    ADD_CODE : begin
         result = dataa + datab;
         overflow = (dataa[WIDTH-1] == datab[WIDTH-1]) && (result[WIDTH-1] != dataa[WIDTH-1]);
     end
-    6'b100010: begin
-        result = dataa - datab;
-        overflow = (dataa[WIDTH-1] == datab[WIDTH-1]) && (result[WIDTH-1] != dataa[WIDTH-1]);
+    SUB_CODE: begin
+        result   = dataa - datab;
+        overflow = (dataa[WIDTH-1] != datab[WIDTH-1]) && (result[WIDTH-1] != dataa[WIDTH-1]);
     end
-    6'b100100: begin
+    AND_CODE: begin
         result =  dataa & datab;
         overflow = 1'b0;       
     end   
-    6'b100101: begin 
+    OR_CODE: begin 
         result = dataa | datab;   
         overflow = 1'b0; 
     end        
-    6'b100110: begin
+    XOR_CODE: begin
         result = dataa ^ datab;           
         overflow = 1'b0;
         end
-    6'b000011: begin
+    SRA_CODE: begin
         result = dataa >>> datab;
         overflow = 1'b0;
         end
-    6'b000010: begin
+    SRL_CODE: begin
         result= dataa >> datab;
         overflow = 1'b0;
         end          
-    6'b100111: begin
+    NOR_CODE: begin
         result = ~(dataa | datab);
         overflow = 1'b0;
         end        
-    default:   {overflow, result} = {{1'b0}, {WIDTH{1'b0}}};
+    default:   {overflow, result} = RESET_OUTPUT;
 endcase
 zero = ~|result;
 end
