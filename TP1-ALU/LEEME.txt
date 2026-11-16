@@ -1,0 +1,71 @@
+ALU parametrizable - TP1 Arquitectura de Computadoras (Basys3)
+================================================================
+
+Contenido de esta carpeta
+--------------------------
+src/
+    alu.v               -> ALU combinacional parametrizable (parameter N)
+    debounce.v          -> Antirrebote de pulsadores
+    alu_basys3_top.v    -> Top level para la placa Basys3
+sim/
+    alu_tb.v             -> Testbench autochequeable (aleatorio + dirigido)
+constraints/
+    basys3.xdc           -> Constraints de pines de la Basys3
+create_project.tcl       -> Script para generar el proyecto de Vivado
+run_sim.tcl               -> Script para correr la simulacion en modo batch
+run_synth.tcl             -> Script para correr la sintesis en modo batch
+
+No se incluye la carpeta vivado_proj/ (el proyecto de Vivado en si) a
+proposito: los .xpr guardan rutas absolutas del disco donde se crearon,
+asi que no se pueden copiar de una PC a otra tal cual. En cambio, se
+regenera en segundos con el script de abajo, ya con las rutas correctas
+para tu propia carpeta.
+
+Como abrir el proyecto (elegi una opcion)
+-------------------------------------------
+
+Opcion A - Desde Vivado (recomendada):
+  1) Abrir Vivado.
+  2) Tools > Run Tcl Script...
+  3) Elegir el archivo create_project.tcl que esta en esta misma carpeta.
+  4) Se crea la carpeta vivado_proj/ con el proyecto (alu_tp1.xpr) ya
+     armado: fuentes agregadas, constraints cargadas y testbench como
+     top de simulacion.
+  5) Abrir vivado_proj/alu_tp1.xpr con doble clic las proximas veces.
+
+Opcion B - Desde la linea de comandos:
+  Ubicate (cd) dentro de esta carpeta y corre:
+
+      vivado -mode batch -source create_project.tcl
+
+Requisitos
+----------
+- Vivado (probado con 2024.1). El proyecto apunta al dispositivo
+  xc7a35tcpg236-1 (el FPGA de la Basys3).
+
+Como correr la simulacion
+--------------------------
+Dentro de Vivado, con el proyecto abierto: Flow Navigator > Simulation >
+Run Simulation > Run Behavioral Simulation. En la Tcl Console deberia
+aparecer:
+
+    TESTBENCH PASO: 2006 vectores (dirigidos + aleatorios), 0 errores.
+
+Como generar el bitstream y programar la Basys3
+-------------------------------------------------
+Flow Navigator > Generate Bitstream (corre sintesis e implementacion
+si todavia no se corrieron). Al terminar, se puede abrir el Hardware
+Manager, conectar la placa por USB (Open target > Auto Connect) y
+Program Device.
+
+Uso en la placa (resumen)
+--------------------------
+- BTNC = reset
+- Cargar A: poner el valor en los switches y apretar BTNL (izquierda)
+- Cargar B: poner el valor en los switches y apretar BTNR (derecha)
+- Cargar Op: poner el codigo de 6 bits (sw[5:0]) y apretar BTNU (arriba)
+- El resultado S = A op B queda mostrado en los 16 LEDs
+
+Tabla de operaciones (Op):
+    ADD 100000   SUB 100010   AND 100100   OR  100101
+    XOR 100110   NOR 100111   SRL 000010   SRA 000011
