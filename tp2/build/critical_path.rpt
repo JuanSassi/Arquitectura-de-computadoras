@@ -1,0 +1,84 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Wed Oct 28 12:25:08 2026
+| Host         : LAPTOP-1GE9VEOQ running 64-bit major release  (build 9200)
+| Command      : report_timing -max_paths 1 -sort_by slack -file D:/Facultad/Arquitectura/Tp2/uart_alu/build/critical_path.rpt
+| Design       : uart_alu_top
+| Device       : 7a35t-cpg236
+| Speed File   : -1  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             5.400ns  (required time - arrival time)
+  Source:                 alu_blk/a_reg_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by sys_clk_pin  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            alu_blk/res_reg_reg[7]_lopt_replica/D
+                            (rising edge-triggered cell FDRE clocked by sys_clk_pin  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (sys_clk_pin rise@10.000ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        4.472ns  (logic 1.917ns (42.865%)  route 2.555ns (57.135%))
+  Logic Levels:           5  (CARRY4=2 LUT2=1 LUT6=2)
+  Clock Path Skew:        -0.032ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.838ns = ( 14.838 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.128ns
+    Clock Pessimism Removal (CPR):    0.258ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    W5                                                0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.967     3.425    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
+                         net (fo=148, routed)         1.607     5.128    alu_blk/clk
+    SLICE_X60Y73         FDRE                                         r  alu_blk/a_reg_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y73         FDRE (Prop_fdre_C_Q)         0.518     5.646 r  alu_blk/a_reg_reg[0]/Q
+                         net (fo=13, routed)          0.876     6.522    alu_blk/alu_inst/a[0]
+    SLICE_X61Y73         LUT2 (Prop_lut2_I0_O)        0.124     6.646 r  alu_blk/alu_inst/result[3]_INST_0_i_14/O
+                         net (fo=1, routed)           0.000     6.646    alu_blk/alu_inst/result[3]_INST_0_i_14_n_0
+    SLICE_X61Y73         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.532     7.178 r  alu_blk/alu_inst/result[3]_INST_0_i_5/CO[3]
+                         net (fo=1, routed)           0.000     7.178    alu_blk/alu_inst/result[3]_INST_0_i_5_n_0
+    SLICE_X61Y74         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.313     7.491 r  alu_blk/alu_inst/result[7]_INST_0_i_5/O[3]
+                         net (fo=1, routed)           0.447     7.938    alu_blk/alu_inst/p_0_in2_in
+    SLICE_X62Y74         LUT6 (Prop_lut6_I3_O)        0.306     8.244 r  alu_blk/alu_inst/result[7]_INST_0_i_2/O
+                         net (fo=1, routed)           0.637     8.881    alu_blk/alu_inst/result[7]_INST_0_i_2_n_0
+    SLICE_X62Y71         LUT6 (Prop_lut6_I2_O)        0.124     9.005 r  alu_blk/alu_inst/result[7]_INST_0/O
+                         net (fo=2, routed)           0.595     9.600    alu_blk/alu_result[7]
+    SLICE_X62Y71         FDRE                                         r  alu_blk/res_reg_reg[7]_lopt_replica/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                     10.000    10.000 r  
+    W5                                                0.000    10.000 r  clk (IN)
+                         net (fo=0)                   0.000    10.000    clk
+    W5                   IBUF (Prop_ibuf_I_O)         1.388    11.388 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.862    13.250    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.341 r  clk_IBUF_BUFG_inst/O
+                         net (fo=148, routed)         1.497    14.838    alu_blk/clk
+    SLICE_X62Y71         FDRE                                         r  alu_blk/res_reg_reg[7]_lopt_replica/C
+                         clock pessimism              0.258    15.096    
+                         clock uncertainty           -0.035    15.061    
+    SLICE_X62Y71         FDRE (Setup_fdre_C_D)       -0.061    15.000    alu_blk/res_reg_reg[7]_lopt_replica
+  -------------------------------------------------------------------
+                         required time                         15.000    
+                         arrival time                          -9.600    
+  -------------------------------------------------------------------
+                         slack                                  5.400    
+
+
+
+

@@ -1,0 +1,274 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1346" font-family="Segoe UI, Arial, sans-serif">
+<rect width="1000" height="1346" fill="#ffffff"/>
+<text x="500" y="30" font-size="20" font-weight="700" fill="#111827" text-anchor="middle">Módulo 4: sync_fifo (buffer entre bloques)</text>
+<text x="30" y="62" font-size="14" font-weight="700" fill="#374151" text-anchor="start">A) Entradas y salidas</text>
+<rect x="340" y="80" width="320" height="190" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<text x="500" y="112" font-size="17" font-weight="700" fill="#14532d" text-anchor="middle">sync_fifo</text>
+<text x="500" y="134" font-size="11" font-weight="400" fill="#14532d" text-anchor="middle">DATA_W = 8     ADDR_W = 4</text>
+<text x="500" y="152" font-size="11" font-weight="400" fill="#14532d" text-anchor="middle">profundidad = 2^4 = 16 bytes</text>
+<text x="500" y="176" font-size="11" font-weight="400" fill="#14532d" text-anchor="middle">memoria + 2 punteros + contador</text>
+<text x="500" y="194" font-size="11" font-weight="400" fill="#14532d" text-anchor="middle">lectura directa del más viejo</text>
+<text x="500" y="212" font-size="11" font-weight="400" fill="#14532d" text-anchor="middle">(first-word fall-through)</text>
+<line x1="190" y1="100" x2="331.0" y2="100.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="340.0,100.0 331.0,104.5 331.0,95.5" fill="#374151"/>
+<text x="20" y="97" font-size="13" font-weight="700" fill="#111827" text-anchor="start">clk</text>
+<text x="20" y="110" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">reloj 100 MHz</text>
+<line x1="190" y1="135" x2="331.0" y2="135.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="340.0,135.0 331.0,139.5 331.0,130.5" fill="#374151"/>
+<text x="20" y="132" font-size="13" font-weight="700" fill="#111827" text-anchor="start">reset</text>
+<text x="20" y="145" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">sincrónico, activo en 1</text>
+<line x1="190" y1="170" x2="331.0" y2="170.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="340.0,170.0 331.0,174.5 331.0,165.5" fill="#374151"/>
+<text x="20" y="167" font-size="13" font-weight="700" fill="#111827" text-anchor="start">wr</text>
+<text x="20" y="180" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">escribir w_data (se ignora si full)</text>
+<line x1="190" y1="205" x2="331.0" y2="205.0" stroke="#374151" stroke-width="3"/>
+<polygon points="340.0,205.0 331.0,209.5 331.0,200.5" fill="#374151"/>
+<text x="20" y="202" font-size="13" font-weight="700" fill="#111827" text-anchor="start">w_data[7:0]</text>
+<text x="20" y="215" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">dato a guardar</text>
+<line x1="190" y1="240" x2="331.0" y2="240.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="340.0,240.0 331.0,244.5 331.0,235.5" fill="#374151"/>
+<text x="20" y="237" font-size="13" font-weight="700" fill="#111827" text-anchor="start">rd</text>
+<text x="20" y="250" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">descartar el más viejo (se ignora si empty)</text>
+<line x1="660" y1="130" x2="781.0" y2="130.0" stroke="#374151" stroke-width="3"/>
+<polygon points="790.0,130.0 781.0,134.5 781.0,125.5" fill="#374151"/>
+<text x="800" y="127" font-size="13" font-weight="700" fill="#111827" text-anchor="start">r_data[7:0]</text>
+<text x="800" y="140" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">dato más viejo (válido si empty=0)</text>
+<line x1="660" y1="175" x2="781.0" y2="175.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="790.0,175.0 781.0,179.5 781.0,170.5" fill="#374151"/>
+<text x="800" y="172" font-size="13" font-weight="700" fill="#111827" text-anchor="start">empty</text>
+<text x="800" y="185" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">1 = no hay datos</text>
+<line x1="660" y1="220" x2="781.0" y2="220.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="790.0,220.0 781.0,224.5 781.0,215.5" fill="#374151"/>
+<text x="800" y="217" font-size="13" font-weight="700" fill="#111827" text-anchor="start">full</text>
+<text x="800" y="230" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">1 = no hay lugar</text>
+<text x="30" y="305" font-size="14" font-weight="700" fill="#374151" text-anchor="start">B) Cómo está hecha</text>
+<text x="30" y="330" font-size="12" font-weight="400" fill="#374151" text-anchor="start">Memoria de 16 posiciones, con un puntero de escritura (w_ptr) y uno de lectura (r_ptr). Ejemplo: se escribieron A1, B2, C3.</text>
+<rect x="84" y="372" width="52" height="42" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+<text x="110.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">0</text>
+<text x="110.0" y="398" font-size="14" font-weight="700" fill="#14532d" text-anchor="middle" font-family="Consolas, monospace">A1</text>
+<rect x="136" y="372" width="52" height="42" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+<text x="162.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">1</text>
+<text x="162.0" y="398" font-size="14" font-weight="700" fill="#14532d" text-anchor="middle" font-family="Consolas, monospace">B2</text>
+<rect x="188" y="372" width="52" height="42" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+<text x="214.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">2</text>
+<text x="214.0" y="398" font-size="14" font-weight="700" fill="#14532d" text-anchor="middle" font-family="Consolas, monospace">C3</text>
+<rect x="240" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="266.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">3</text>
+<rect x="292" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="318.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">4</text>
+<rect x="344" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="370.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">5</text>
+<rect x="396" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="422.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">6</text>
+<rect x="448" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="474.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">7</text>
+<rect x="500" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="526.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">8</text>
+<rect x="552" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="578.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">9</text>
+<rect x="604" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="630.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">10</text>
+<rect x="656" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="682.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">11</text>
+<rect x="708" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="734.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">12</text>
+<rect x="760" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="786.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">13</text>
+<rect x="812" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="838.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">14</text>
+<rect x="864" y="372" width="52" height="42" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<text x="890.0" y="366" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">15</text>
+<line x1="110" y1="458" x2="110.0" y2="425.0" stroke="#7c3aed" stroke-width="2.2"/>
+<polygon points="110.0,416.0 114.5,425.0 105.5,425.0" fill="#7c3aed"/>
+<text x="110" y="476" font-size="12" font-weight="700" fill="#6d28d9" text-anchor="middle">r_ptr = 0</text>
+<text x="110" y="490" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">(el más viejo)</text>
+<line x1="266" y1="458" x2="266.0" y2="425.0" stroke="#d97706" stroke-width="2.2"/>
+<polygon points="266.0,416.0 270.5,425.0 261.5,425.0" fill="#d97706"/>
+<text x="266" y="476" font-size="12" font-weight="700" fill="#b45309" text-anchor="middle">w_ptr = 3</text>
+<text x="266" y="490" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">(próximo lugar libre)</text>
+<text x="500" y="442" font-size="12" font-weight="700" fill="#14532d" text-anchor="start">count = 3  →  empty = 0, full = 0</text>
+<text x="500" y="460" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="start">Al llegar al final (posición 15) los punteros vuelven a 0:</text>
+<text x="500" y="474" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="start">como son de 4 bits, w_ptr + 1 da la vuelta solo.</text>
+<text x="30" y="560" font-size="12" font-weight="600" fill="#374151" text-anchor="start">Qué hardware hay detrás (todo cambia en el flanco de clk):</text>
+<rect x="30" y="585" width="175" height="46" rx="6" fill="#f3f4f6" stroke="#374151" stroke-width="1.6"/>
+<text x="117" y="604" font-size="12" font-weight="600" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">do_wr = wr &amp; ~full</text>
+<text x="117" y="620" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">(escritura efectiva)</text>
+<rect x="30" y="720" width="175" height="46" rx="6" fill="#f3f4f6" stroke="#374151" stroke-width="1.6"/>
+<text x="117" y="739" font-size="12" font-weight="600" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">do_rd = rd &amp; ~empty</text>
+<text x="117" y="755" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">(lectura efectiva)</text>
+<rect x="270" y="565" width="215" height="44" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.6"/>
+<text x="377" y="584" font-size="12" font-weight="600" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">mem[w_ptr] &lt;= w_data</text>
+<text x="377" y="600" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">escribe el dato</text>
+<rect x="270" y="622" width="215" height="44" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.6"/>
+<text x="377" y="641" font-size="12" font-weight="600" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">w_ptr &lt;= w_ptr + 1</text>
+<text x="377" y="657" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">avanza el puntero de escritura</text>
+<rect x="270" y="679" width="215" height="58" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.6"/>
+<text x="377" y="698" font-size="12.5" font-weight="700" fill="#111827" text-anchor="middle">count</text>
+<text x="377" y="714" font-size="10.5" font-weight="400" fill="#111827" text-anchor="middle">solo do_wr: +1    solo do_rd: -1</text>
+<text x="377" y="728" font-size="10.5" font-weight="400" fill="#111827" text-anchor="middle">ambos o ninguno: igual</text>
+<rect x="270" y="750" width="215" height="44" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.6"/>
+<text x="377" y="769" font-size="12" font-weight="600" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">r_ptr &lt;= r_ptr + 1</text>
+<text x="377" y="785" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">avanza el puntero de lectura</text>
+<line x1="205" y1="600" x2="261.2" y2="588.8" stroke="#374151" stroke-width="1.8"/>
+<polygon points="270.0,587.0 262.1,593.2 260.3,584.4" fill="#374151"/>
+<line x1="205" y1="608" x2="262.1" y2="639.6" stroke="#374151" stroke-width="1.8"/>
+<polygon points="270.0,644.0 259.9,643.6 264.3,635.7" fill="#374151"/>
+<line x1="205" y1="618" x2="264.2" y2="688.1" stroke="#374151" stroke-width="1.8"/>
+<polygon points="270.0,695.0 260.8,691.0 267.6,685.2" fill="#374151"/>
+<line x1="205" y1="738" x2="261.2" y2="725.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="270.0,723.0 262.2,729.4 260.2,720.6" fill="#374151"/>
+<line x1="205" y1="750" x2="261.5" y2="769.1" stroke="#374151" stroke-width="1.8"/>
+<polygon points="270.0,772.0 260.0,773.4 262.9,764.9" fill="#374151"/>
+<rect x="560" y="679" width="220" height="58" rx="6" fill="#f3f4f6" stroke="#374151" stroke-width="1.6"/>
+<text x="670" y="700" font-size="12" font-weight="600" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">empty = (count == 0)</text>
+<text x="670" y="720" font-size="12" font-weight="600" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">full  = (count == 16)</text>
+<line x1="485" y1="708" x2="551.0" y2="708.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="560.0,708.0 551.0,712.5 551.0,703.5" fill="#374151"/>
+<rect x="560" y="750" width="220" height="44" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.6"/>
+<text x="670" y="769" font-size="12" font-weight="600" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">r_data = mem[r_ptr]</text>
+<text x="670" y="785" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">lectura directa, sin esperar flanco</text>
+<line x1="485" y1="772" x2="551.0" y2="772.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="560.0,772.0 551.0,776.5 551.0,767.5" fill="#374151"/>
+<text x="810" y="600" font-size="11" font-weight="400" fill="#111827" text-anchor="start">full bloquea las escrituras y</text>
+<text x="810" y="616" font-size="11" font-weight="400" fill="#111827" text-anchor="start">empty bloquea las lecturas: así</text>
+<text x="810" y="632" font-size="11" font-weight="400" fill="#111827" text-anchor="start">wr con la FIFO llena o rd con la</text>
+<text x="810" y="648" font-size="11" font-weight="400" fill="#111827" text-anchor="start">FIFO vacía no corrompen nada.</text>
+<text x="810" y="682" font-size="11" font-weight="400" fill="#b45309" text-anchor="start">¿Por qué un contador? Cuando la</text>
+<text x="810" y="698" font-size="11" font-weight="400" fill="#b45309" text-anchor="start">FIFO está vacía y cuando está</text>
+<text x="810" y="714" font-size="11" font-weight="400" fill="#b45309" text-anchor="start">llena, w_ptr == r_ptr. Los punteros</text>
+<text x="810" y="730" font-size="11" font-weight="400" fill="#b45309" text-anchor="start">solos no distinguen los dos casos.</text>
+<text x="30" y="835" font-size="14" font-weight="700" fill="#374151" text-anchor="start">C) Ejemplo paso a paso (valores DESPUÉS del flanco de clk)</text>
+<rect x="30" y="846" width="940" height="24" fill="#f3f4f6"/>
+<text x="40" y="863" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">operación</text>
+<text x="250" y="863" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">w_ptr</text>
+<text x="320" y="863" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">r_ptr</text>
+<text x="390" y="863" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">count</text>
+<text x="460" y="863" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">empty</text>
+<text x="530" y="863" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">full</text>
+<text x="600" y="863" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">r_data</text>
+<text x="690" y="863" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">qué pasó</text>
+<text x="40" y="887" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">reset</text>
+<text x="250" y="887" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="320" y="887" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="390" y="887" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="460" y="887" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">1</text>
+<text x="530" y="887" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="600" y="887" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">—</text>
+<text x="690" y="887" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">FIFO vacía</text>
+<rect x="30" y="895" width="940" height="23" fill="#fafafa"/>
+<text x="40" y="911" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">wr  (w_data = A1)</text>
+<text x="250" y="911" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">1</text>
+<text x="320" y="911" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="390" y="911" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">1</text>
+<text x="460" y="911" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="530" y="911" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="600" y="911" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">A1</text>
+<text x="690" y="911" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">guarda A1 en mem[0]</text>
+<text x="40" y="935" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">wr  (w_data = B2)</text>
+<text x="250" y="935" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">2</text>
+<text x="320" y="935" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="390" y="935" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">2</text>
+<text x="460" y="935" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="530" y="935" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="600" y="935" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">A1</text>
+<text x="690" y="935" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">r_data sigue mostrando el más viejo</text>
+<rect x="30" y="943" width="940" height="23" fill="#fafafa"/>
+<text x="40" y="959" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">wr  (w_data = C3)</text>
+<text x="250" y="959" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">3</text>
+<text x="320" y="959" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="390" y="959" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">3</text>
+<text x="460" y="959" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="530" y="959" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="600" y="959" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">A1</text>
+<text x="690" y="959" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start"></text>
+<text x="40" y="983" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">rd</text>
+<text x="250" y="983" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">3</text>
+<text x="320" y="983" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">1</text>
+<text x="390" y="983" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">2</text>
+<text x="460" y="983" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="530" y="983" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="600" y="983" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">B2</text>
+<text x="690" y="983" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">A1 descartado, ahora el más viejo es B2</text>
+<rect x="30" y="991" width="940" height="23" fill="#fafafa"/>
+<text x="40" y="1007" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">wr (D4) y rd a la vez</text>
+<text x="250" y="1007" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">4</text>
+<text x="320" y="1007" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">2</text>
+<text x="390" y="1007" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">2</text>
+<text x="460" y="1007" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="530" y="1007" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="600" y="1007" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">C3</text>
+<text x="690" y="1007" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">hace ambos: count queda igual</text>
+<text x="40" y="1031" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">rd</text>
+<text x="250" y="1031" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">4</text>
+<text x="320" y="1031" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">3</text>
+<text x="390" y="1031" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">1</text>
+<text x="460" y="1031" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="530" y="1031" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="600" y="1031" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">D4</text>
+<text x="690" y="1031" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start"></text>
+<rect x="30" y="1039" width="940" height="23" fill="#fafafa"/>
+<text x="40" y="1055" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">rd</text>
+<text x="250" y="1055" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">4</text>
+<text x="320" y="1055" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">4</text>
+<text x="390" y="1055" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="460" y="1055" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">1</text>
+<text x="530" y="1055" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="600" y="1055" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">—</text>
+<text x="690" y="1055" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">queda vacía (nota: w_ptr == r_ptr)</text>
+<rect x="30" y="1063" width="940" height="23" fill="#fee2e2"/>
+<text x="40" y="1079" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">rd con la FIFO vacía</text>
+<text x="250" y="1079" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">4</text>
+<text x="320" y="1079" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">4</text>
+<text x="390" y="1079" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="460" y="1079" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">1</text>
+<text x="530" y="1079" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="600" y="1079" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">—</text>
+<text x="690" y="1079" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">se ignora: nada cambia</text>
+<rect x="30" y="1087" width="940" height="23" fill="#fafafa"/>
+<text x="40" y="1103" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">16 wr seguidos</text>
+<text x="250" y="1103" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">4</text>
+<text x="320" y="1103" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">4</text>
+<text x="390" y="1103" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">16</text>
+<text x="460" y="1103" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="530" y="1103" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">1</text>
+<text x="600" y="1103" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">1º de los 16</text>
+<text x="690" y="1103" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">llena (nota: w_ptr == r_ptr otra vez)</text>
+<rect x="30" y="1111" width="940" height="23" fill="#fee2e2"/>
+<text x="40" y="1127" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">wr con la FIFO llena</text>
+<text x="250" y="1127" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">4</text>
+<text x="320" y="1127" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">4</text>
+<text x="390" y="1127" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">16</text>
+<text x="460" y="1127" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0</text>
+<text x="530" y="1127" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">1</text>
+<text x="600" y="1127" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start" font-family="Consolas, monospace">1º de los 16</text>
+<text x="690" y="1127" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">se ignora: no pisa datos</text>
+<text x="30" y="1191" font-size="14" font-weight="700" fill="#374151" text-anchor="start">D) Dónde se usa (el mismo módulo, dos instancias dentro de uart_interface)</text>
+<rect x="30" y="1216" width="150" height="60" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+<text x="105" y="1244" font-size="14" font-weight="700" fill="#1e3a8a" text-anchor="middle">uart_rx</text>
+<text x="105" y="1262" font-size="10" font-weight="400" fill="#1e3a8a" text-anchor="middle">productor de bytes</text>
+<rect x="250" y="1216" width="130" height="60" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<text x="315" y="1244" font-size="14" font-weight="700" fill="#14532d" text-anchor="middle">FIFO rx</text>
+<text x="315" y="1262" font-size="10" font-weight="400" fill="#14532d" text-anchor="middle">sync_fifo (inst. 1)</text>
+<rect x="450" y="1216" width="150" height="60" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<text x="525" y="1244" font-size="14" font-weight="700" fill="#4c1d95" text-anchor="middle">alu_uart_ctrl</text>
+<text x="525" y="1262" font-size="10" font-weight="400" fill="#4c1d95" text-anchor="middle">lee y escribe</text>
+<rect x="670" y="1216" width="130" height="60" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<text x="735" y="1244" font-size="14" font-weight="700" fill="#14532d" text-anchor="middle">FIFO tx</text>
+<text x="735" y="1262" font-size="10" font-weight="400" fill="#14532d" text-anchor="middle">sync_fifo (inst. 2)</text>
+<rect x="830" y="1216" width="140" height="60" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+<text x="900" y="1244" font-size="14" font-weight="700" fill="#1e3a8a" text-anchor="middle">uart_tx</text>
+<text x="900" y="1262" font-size="10" font-weight="400" fill="#1e3a8a" text-anchor="middle">consumidor de bytes</text>
+<line x1="180" y1="1246" x2="241.0" y2="1246.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="250.0,1246.0 241.0,1250.5 241.0,1241.5" fill="#374151"/>
+<text x="215" y="1238" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">wr</text>
+<line x1="380" y1="1246" x2="441.0" y2="1246.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="450.0,1246.0 441.0,1250.5 441.0,1241.5" fill="#374151"/>
+<text x="415" y="1238" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">rd</text>
+<line x1="600" y1="1246" x2="661.0" y2="1246.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="670.0,1246.0 661.0,1250.5 661.0,1241.5" fill="#374151"/>
+<text x="635" y="1238" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">wr</text>
+<line x1="800" y1="1246" x2="821.0" y2="1246.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="830.0,1246.0 821.0,1250.5 821.0,1241.5" fill="#374151"/>
+<text x="30" y="1304" font-size="11" font-weight="400" fill="#374151" text-anchor="start">FIFO rx:  wr = rx_done_tick,  w_data = dout (del Rx)   |   rd = rd (de la ALU),  r_data y empty hacia la ALU</text>
+<text x="30" y="1322" font-size="11" font-weight="400" fill="#374151" text-anchor="start">FIFO tx:  wr = wr (de la ALU),  w_data = resultado, full hacia la ALU   |   rd = tx_done_tick (del Tx),  r_data → din,  ~empty → tx_start</text>
+</svg>

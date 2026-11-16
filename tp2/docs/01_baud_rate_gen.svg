@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 700" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="960" height="700" fill="#ffffff"/>
+  <text x="480" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#111827">Módulo 1: baud_rate_gen</text>
+
+  <!-- A) caja de entradas / salidas -->
+  <text x="30" y="62" font-size="14" font-weight="700" fill="#374151">A) Entradas y salidas</text>
+  <rect x="300" y="80" width="200" height="110" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="400" y="106" text-anchor="middle" font-size="16" font-weight="700" fill="#78350f">baud_rate_gen</text>
+  <text x="400" y="126" text-anchor="middle" font-size="11" fill="#78350f">CLK_FREQ = 100_000_000</text>
+  <text x="400" y="142" text-anchor="middle" font-size="11" fill="#78350f">BAUD_RATE = 19_200</text>
+  <text x="400" y="158" text-anchor="middle" font-size="11" fill="#78350f">OVERSAMPLE = 16</text>
+  <text x="400" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#78350f">→ DVSR = 326</text>
+  <line x1="180" y1="110" x2="291.0" y2="110.0" stroke="#374151" stroke-width="1.8"/><polygon points="300.0,110.0 291.0,114.5 291.0,105.5" fill="#374151"/>
+  <text x="30" y="107" font-size="13" font-weight="700" fill="#111827">clk</text><text x="30" y="122" font-size="10" fill="#6b7280">reloj 100 MHz</text>
+  <line x1="180" y1="160" x2="291.0" y2="160.0" stroke="#374151" stroke-width="1.8"/><polygon points="300.0,160.0 291.0,164.5 291.0,155.5" fill="#374151"/>
+  <text x="30" y="157" font-size="13" font-weight="700" fill="#111827">reset</text><text x="30" y="172" font-size="10" fill="#6b7280">sincrónico, activo en 1</text>
+  <line x1="500" y1="135" x2="631.0" y2="135.0" stroke="#d97706" stroke-width="2"/><polygon points="640.0,135.0 631.0,139.5 631.0,130.5" fill="#d97706"/>
+  <text x="650" y="132" font-size="13" font-weight="700" fill="#111827">tick</text><text x="650" y="147" font-size="10" fill="#6b7280">1 ciclo en alto cada 326 ciclos</text>
+  <text x="650" y="162" font-size="10" fill="#6b7280">→ s_tick de uart_rx y uart_tx</text>
+
+  <!-- B) estructura interna -->
+  <text x="30" y="226" font-size="14" font-weight="700" fill="#374151">B) Estructura interna (qué hardware se genera)</text>
+  <rect x="60" y="240" width="840" height="170" rx="10" fill="none" stroke="#9ca3af" stroke-dasharray="6 4"/>
+
+  <!-- registro cnt -->
+  <rect x="90" y="300" width="130" height="60" rx="6" fill="#ffffff" stroke="#374151" stroke-width="1.8"/>
+  <text x="155" y="326" text-anchor="middle" font-size="14" font-weight="700" fill="#111827">cnt</text>
+  <text x="155" y="345" text-anchor="middle" font-size="11" fill="#6b7280">registro de 9 bits</text>
+  <!-- sumador -->
+  <rect x="290" y="262" width="100" height="38" rx="6" fill="#f3f4f6" stroke="#374151" stroke-width="1.5"/>
+  <text x="340" y="286" text-anchor="middle" font-size="13" fill="#111827">cnt + 1</text>
+  <!-- comparador -->
+  <rect x="290" y="355" width="130" height="38" rx="6" fill="#f3f4f6" stroke="#374151" stroke-width="1.5"/>
+  <text x="355" y="379" text-anchor="middle" font-size="13" fill="#111827">cnt == 325 ?</text>
+  <!-- mux -->
+  <path d="M480,268 L540,285 L540,335 L480,352 Z" fill="#f3f4f6" stroke="#374151" stroke-width="1.5"/>
+  <text x="515" y="316" text-anchor="middle" font-size="12" fill="#111827">mux</text>
+    <line x1="455" y1="340" x2="480" y2="340" stroke="#374151" stroke-width="1.5"/><text x="440" y="344" font-size="12" fill="#111827">0</text>
+  <!-- tick ff -->
+  <rect x="690" y="355" width="110" height="46" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="2"/>
+  <text x="745" y="376" text-anchor="middle" font-size="14" font-weight="700" fill="#78350f">tick</text>
+  <text x="745" y="393" text-anchor="middle" font-size="11" fill="#6b7280">flip-flop</text>
+
+  <!-- cnt -> sumador, cnt -> comparador -->
+  <line x1="220" y1="318" x2="281.9" y2="288.8" stroke="#374151" stroke-width="1.5"/><polygon points="290.0,285.0 283.8,292.9 279.9,284.8" fill="#374151"/>
+  <line x1="220" y1="345" x2="281.6" y2="368.8" stroke="#374151" stroke-width="1.5"/><polygon points="290.0,372.0 280.0,373.0 283.2,364.6" fill="#374151"/>
+  <!-- sumador -> mux -->
+  <line x1="390" y1="281" x2="471.0" y2="281.0" stroke="#374151" stroke-width="1.5"/><polygon points="480.0,281.0 471.0,285.5 471.0,276.5" fill="#374151"/>
+  <!-- comparador -> selector del mux -->
+  <line x1="420" y1="374" x2="510" y2="374" stroke="#374151" stroke-width="1.5"/>
+  <line x1="510" y1="374" x2="510.0" y2="352.0" stroke="#374151" stroke-width="1.5"/><polygon points="510.0,343.0 514.5,352.0 505.5,352.0" fill="#374151"/>
+  <!-- comparador -> tick -->
+  <line x1="510" y1="378" x2="681.0" y2="378.0" stroke="#d97706" stroke-width="1.8"/><polygon points="690.0,378.0 681.0,382.5 681.0,373.5" fill="#d97706"/>
+  <line x1="420" y1="378" x2="510" y2="378" stroke="#d97706" stroke-width="1.8"/>
+  <text x="560" y="398" font-size="11" fill="#b45309">tick &lt;= (cnt == 325)</text>
+  <!-- mux -> cnt (realimentacion) -->
+  <line x1="540" y1="310" x2="575" y2="310" stroke="#374151" stroke-width="1.5"/>
+  <line x1="575" y1="310" x2="575" y2="252" stroke="#374151" stroke-width="1.5"/>
+  <line x1="575" y1="252" x2="155" y2="252" stroke="#374151" stroke-width="1.5"/>
+  <line x1="155" y1="252" x2="155.0" y2="291.0" stroke="#374151" stroke-width="1.5"/><polygon points="155.0,300.0 150.5,291.0 159.5,291.0" fill="#374151"/>
+  <text x="590" y="262" font-size="10" fill="#6b7280">nuevo valor de cnt (en el flanco de clk)</text>
+
+  <!-- C) forma de onda -->
+  <text x="30" y="446" font-size="14" font-weight="700" fill="#374151">C) Forma de onda (alrededor del final de la cuenta)</text>
+  <text x="30" y="490" font-size="12" font-weight="600" fill="#111827">clk</text>
+  <text x="30" y="536" font-size="12" font-weight="600" fill="#111827">cnt</text>
+  <text x="30" y="586" font-size="12" font-weight="600" fill="#111827">tick</text>
+  <g stroke="#e5e7eb" stroke-width="1">
+    <line x1="120" y1="460" x2="120" y2="600"/><line x1="220" y1="460" x2="220" y2="600"/>
+    <line x1="320" y1="460" x2="320" y2="600"/><line x1="420" y1="460" x2="420" y2="600"/>
+    <line x1="520" y1="460" x2="520" y2="600"/><line x1="620" y1="460" x2="620" y2="600"/>
+    <line x1="720" y1="460" x2="720" y2="600"/><line x1="820" y1="460" x2="820" y2="600"/>
+  </g>
+  <polyline fill="none" stroke="#374151" stroke-width="1.8"
+    points="120,495 120,475 170,475 170,495 220,495 220,475 270,475 270,495 320,495 320,475 370,475 370,495 420,495 420,475 470,475 470,495 520,495 520,475 570,475 570,495 620,495 620,475 670,475 670,495 720,495 720,475 770,475 770,495 820,495"/>
+  <g fill="#ffffff" stroke="#374151" stroke-width="1.5">
+    <polygon points="120,531 128,515 212,515 220,531 212,547 128,547"/>
+    <polygon points="220,531 228,515 312,515 320,531 312,547 228,547"/>
+    <polygon points="320,531 328,515 412,515 420,531 412,547 328,547" fill="#fef3c7"/>
+    <polygon points="420,531 428,515 512,515 520,531 512,547 428,547"/>
+    <polygon points="520,531 528,515 612,515 620,531 612,547 528,547"/>
+    <polygon points="620,531 628,515 712,515 720,531 712,547 628,547"/>
+    <polygon points="720,531 728,515 812,515 820,531 812,547 728,547"/>
+  </g>
+  <g font-size="13" text-anchor="middle" fill="#111827">
+    <text x="170" y="536">323</text><text x="270" y="536">324</text><text x="370" y="536" font-weight="700">325</text>
+    <text x="470" y="536" font-weight="700">0</text><text x="570" y="536">1</text><text x="670" y="536">2</text><text x="770" y="536">3</text>
+  </g>
+  <polyline fill="none" stroke="#d97706" stroke-width="2.6" points="120,590 420,590 420,566 520,566 520,590 820,590"/>
+  <text x="470" y="560" text-anchor="middle" font-size="11" font-weight="700" fill="#b45309">tick = 1</text>
+  <text x="370" y="620" text-anchor="middle" font-size="10" fill="#6b7280">cnt == 325: el comparador</text>
+  <text x="370" y="633" text-anchor="middle" font-size="10" fill="#6b7280">lo detecta en este ciclo</text>
+  <text x="520" y="620" text-anchor="start" font-size="10" fill="#6b7280">en el flanco siguiente cnt vuelve a 0</text>
+  <text x="520" y="633" text-anchor="start" font-size="10" fill="#6b7280">y tick (registrado) vale 1 durante ese ciclo</text>
+
+  <!-- D) cadena de tiempos -->
+  <text x="30" y="672" font-size="13" font-weight="700" fill="#374151">D) Cadena de tiempos:</text>
+  <text x="190" y="672" font-size="12" fill="#374151">326 clk (3,26 µs) = 1 tick → ×16 = 1 bit (52,16 µs) → ×10 = 1 trama (521,6 µs) → 19171 baud reales (error 0,15 %)</text>
+</svg>

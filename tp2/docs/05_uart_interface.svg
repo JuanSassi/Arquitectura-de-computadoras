@@ -1,0 +1,235 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1558" font-family="Segoe UI, Arial, sans-serif">
+<rect width="1000" height="1558" fill="#ffffff"/>
+<text x="500" y="30" font-size="20" font-weight="700" fill="#111827" text-anchor="middle">Módulo 5: uart_interface</text>
+<text x="30" y="62" font-size="14" font-weight="700" fill="#374151" text-anchor="start">A) Entradas y salidas</text>
+<rect x="340" y="105" width="320" height="270" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<text x="500" y="137" font-size="17" font-weight="700" fill="#14532d" text-anchor="middle">uart_interface</text>
+<text x="500" y="159" font-size="11" font-weight="400" fill="#14532d" text-anchor="middle">DBIT = 8      ADDR_W = 4</text>
+<text x="500" y="213" font-size="12" font-weight="600" fill="#14532d" text-anchor="middle" font-family="Consolas, monospace">fifo_rx  (sync_fifo)</text>
+<text x="500" y="233" font-size="12" font-weight="600" fill="#14532d" text-anchor="middle" font-family="Consolas, monospace">fifo_tx  (sync_fifo)</text>
+<text x="500" y="257" font-size="12" font-weight="600" fill="#14532d" text-anchor="middle" font-family="Consolas, monospace">tx_start = ~tx_empty</text>
+<text x="500" y="295" font-size="11" font-weight="400" fill="#14532d" text-anchor="middle">dos buffers independientes,</text>
+<text x="500" y="310" font-size="11" font-weight="400" fill="#14532d" text-anchor="middle">uno por cada sentido</text>
+<line x1="420" y1="72" x2="420.0" y2="96.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="420.0,105.0 415.5,96.0 424.5,96.0" fill="#374151"/>
+<text x="420" y="66" font-size="12" font-weight="700" fill="#111827" text-anchor="middle">clk</text>
+<line x1="580" y1="72" x2="580.0" y2="96.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="580.0,105.0 575.5,96.0 584.5,96.0" fill="#374151"/>
+<text x="580" y="66" font-size="12" font-weight="700" fill="#111827" text-anchor="middle">reset</text>
+<text x="30" y="125" font-size="11" font-weight="700" fill="#2563eb" text-anchor="start">LADO UART (Rx)</text>
+<text x="30" y="275" font-size="11" font-weight="700" fill="#2563eb" text-anchor="start">LADO UART (Tx)</text>
+<line x1="190" y1="150" x2="331.0" y2="150.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="340.0,150.0 331.0,154.5 331.0,145.5" fill="#374151"/>
+<text x="20" y="147" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">rx_done_tick</text>
+<text x="20" y="160" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">del uart_rx: llegó un byte</text>
+<line x1="190" y1="190" x2="331.0" y2="190.0" stroke="#374151" stroke-width="3"/>
+<polygon points="340.0,190.0 331.0,194.5 331.0,185.5" fill="#374151"/>
+<text x="20" y="187" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">rx_dout[7:0]</text>
+<text x="20" y="200" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">el byte recibido</text>
+<line x1="190" y1="300" x2="331.0" y2="300.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="340.0,300.0 331.0,304.5 331.0,295.5" fill="#374151"/>
+<text x="20" y="297" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">tx_done_tick</text>
+<text x="20" y="310" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">del uart_tx: terminó de enviar</text>
+<line x1="340" y1="335" x2="199.0" y2="335.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="190.0,335.0 199.0,330.5 199.0,339.5" fill="#374151"/>
+<text x="20" y="332" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">tx_start</text>
+<text x="20" y="345" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">al uart_tx: hay un byte</text>
+<line x1="340" y1="370" x2="199.0" y2="370.0" stroke="#374151" stroke-width="3"/>
+<polygon points="190.0,370.0 199.0,365.5 199.0,374.5" fill="#374151"/>
+<text x="20" y="367" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">tx_din[7:0]</text>
+<text x="20" y="380" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">al uart_tx: el byte a enviar</text>
+<text x="810" y="125" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="start">LADO ALU</text>
+<line x1="790" y1="150" x2="669.0" y2="150.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="660.0,150.0 669.0,145.5 669.0,154.5" fill="#374151"/>
+<text x="800" y="147" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">rd</text>
+<text x="800" y="160" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">la ALU consumió r_data</text>
+<line x1="660" y1="185" x2="781.0" y2="185.0" stroke="#374151" stroke-width="3"/>
+<polygon points="790.0,185.0 781.0,189.5 781.0,180.5" fill="#374151"/>
+<text x="800" y="182" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">r_data[7:0]</text>
+<text x="800" y="195" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">byte más viejo recibido</text>
+<line x1="660" y1="220" x2="781.0" y2="220.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="790.0,220.0 781.0,224.5 781.0,215.5" fill="#374151"/>
+<text x="800" y="217" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">rx_empty</text>
+<text x="800" y="230" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">1 = no hay bytes que leer</text>
+<line x1="660" y1="255" x2="781.0" y2="255.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="790.0,255.0 781.0,259.5 781.0,250.5" fill="#374151"/>
+<text x="800" y="252" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">rx_full</text>
+<text x="800" y="265" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">extra: FIFO rx llena (desborde)</text>
+<line x1="790" y1="300" x2="669.0" y2="300.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="660.0,300.0 669.0,295.5 669.0,304.5" fill="#374151"/>
+<text x="800" y="297" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">wr</text>
+<text x="800" y="310" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">la ALU encola un resultado</text>
+<line x1="790" y1="335" x2="669.0" y2="335.0" stroke="#374151" stroke-width="3"/>
+<polygon points="660.0,335.0 669.0,330.5 669.0,339.5" fill="#374151"/>
+<text x="800" y="332" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">w_data[7:0]</text>
+<text x="800" y="345" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">el resultado a enviar</text>
+<line x1="660" y1="370" x2="781.0" y2="370.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="790.0,370.0 781.0,374.5 781.0,365.5" fill="#374151"/>
+<text x="800" y="367" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">tx_full</text>
+<text x="800" y="380" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">1 = la ALU debe esperar</text>
+<text x="30" y="440" font-size="14" font-weight="700" fill="#374151" text-anchor="start">B) Estructura interna: solo dos FIFO y un inversor</text>
+<rect x="380" y="465" width="240" height="125" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+<text x="500.0" y="488" font-size="14" font-weight="700" fill="#14532d" text-anchor="middle" font-family="Consolas, monospace">fifo_rx</text>
+<text x="500.0" y="506" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="middle">(Rx → ALU)</text>
+<line x1="150" y1="525" x2="371.0" y2="525.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="380.0,525.0 371.0,529.5 371.0,520.5" fill="#374151"/>
+<text x="150" y="519" font-size="11" font-weight="600" fill="#111827" text-anchor="start">rx_done_tick</text>
+<text x="388" y="529" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="start" font-family="Consolas, monospace">wr</text>
+<line x1="150" y1="560" x2="371.0" y2="560.0" stroke="#374151" stroke-width="3"/>
+<polygon points="380.0,560.0 371.0,564.5 371.0,555.5" fill="#374151"/>
+<text x="150" y="554" font-size="11" font-weight="600" fill="#111827" text-anchor="start">rx_dout</text>
+<text x="388" y="564" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="start" font-family="Consolas, monospace">w_data</text>
+<line x1="850" y1="525" x2="629.0" y2="525.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="620.0,525.0 629.0,520.5 629.0,529.5" fill="#374151"/>
+<text x="850" y="519" font-size="11" font-weight="600" fill="#111827" text-anchor="end">rd</text>
+<text x="612" y="529" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="end" font-family="Consolas, monospace">rd</text>
+<line x1="620" y1="545" x2="841.0" y2="545.0" stroke="#374151" stroke-width="3"/>
+<polygon points="850.0,545.0 841.0,549.5 841.0,540.5" fill="#374151"/>
+<text x="612" y="549" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="end" font-family="Consolas, monospace">r_data</text>
+<text x="850" y="540" font-size="11" font-weight="600" fill="#111827" text-anchor="end">r_data</text>
+<line x1="620" y1="565" x2="841.0" y2="565.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="850.0,565.0 841.0,569.5 841.0,560.5" fill="#374151"/>
+<text x="612" y="569" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="end" font-family="Consolas, monospace">empty</text>
+<text x="850" y="560" font-size="11" font-weight="600" fill="#111827" text-anchor="end">rx_empty</text>
+<line x1="620" y1="583" x2="841.0" y2="583.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="850.0,583.0 841.0,587.5 841.0,578.5" fill="#374151"/>
+<text x="612" y="587" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="end" font-family="Consolas, monospace">full</text>
+<text x="850" y="578" font-size="11" font-weight="600" fill="#111827" text-anchor="end">rx_full</text>
+<rect x="380" y="630" width="240" height="125" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+<text x="500.0" y="653" font-size="14" font-weight="700" fill="#14532d" text-anchor="middle" font-family="Consolas, monospace">fifo_tx</text>
+<text x="500.0" y="671" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="middle">(ALU → Tx)</text>
+<line x1="850" y1="690" x2="629.0" y2="690.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="620.0,690.0 629.0,685.5 629.0,694.5" fill="#374151"/>
+<text x="850" y="684" font-size="11" font-weight="600" fill="#111827" text-anchor="end">wr</text>
+<text x="612" y="694" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="end" font-family="Consolas, monospace">wr</text>
+<line x1="850" y1="715" x2="629.0" y2="715.0" stroke="#374151" stroke-width="3"/>
+<polygon points="620.0,715.0 629.0,710.5 629.0,719.5" fill="#374151"/>
+<text x="850" y="709" font-size="11" font-weight="600" fill="#111827" text-anchor="end">w_data</text>
+<text x="612" y="719" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="end" font-family="Consolas, monospace">w_data</text>
+<line x1="620" y1="738" x2="841.0" y2="738.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="850.0,738.0 841.0,742.5 841.0,733.5" fill="#374151"/>
+<text x="612" y="742" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="end" font-family="Consolas, monospace">full</text>
+<text x="850" y="732" font-size="11" font-weight="600" fill="#111827" text-anchor="end">tx_full</text>
+<line x1="150" y1="690" x2="371.0" y2="690.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="380.0,690.0 371.0,694.5 371.0,685.5" fill="#374151"/>
+<text x="150" y="684" font-size="11" font-weight="600" fill="#111827" text-anchor="start">tx_done_tick</text>
+<text x="388" y="694" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="start" font-family="Consolas, monospace">rd</text>
+<line x1="380" y1="715" x2="159.0" y2="715.0" stroke="#374151" stroke-width="3"/>
+<polygon points="150.0,715.0 159.0,710.5 159.0,719.5" fill="#374151"/>
+<text x="150" y="709" font-size="11" font-weight="600" fill="#111827" text-anchor="start">tx_din</text>
+<text x="388" y="719" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="start" font-family="Consolas, monospace">r_data</text>
+<line x1="380" y1="738" x2="300" y2="738" stroke="#374151" stroke-width="1.8"/>
+<text x="388" y="742" font-size="10.5" font-weight="600" fill="#14532d" text-anchor="start" font-family="Consolas, monospace">empty</text>
+<text x="340" y="730" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="middle">tx_empty</text>
+<polygon points="300,727 300,749 276,738" fill="#ffffff" stroke="#374151" stroke-width="1.8"/>
+<circle cx="272" cy="738" r="4" fill="#ffffff" stroke="#374151" stroke-width="1.8"/>
+<line x1="268" y1="738" x2="159.0" y2="738.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="150.0,738.0 159.0,733.5 159.0,742.5" fill="#374151"/>
+<text x="150" y="732" font-size="11" font-weight="600" fill="#111827" text-anchor="start">tx_start</text>
+<text x="150" y="754" font-size="10" font-weight="400" fill="#6b7280" text-anchor="start">= ~tx_empty (hay algo para enviar)</text>
+<text x="30" y="800" font-size="14" font-weight="700" fill="#374151" text-anchor="start">C) Forma de onda de ejemplo (valores después de cada flanco de clk)</text>
+<text x="30" y="828" font-size="12" font-weight="700" fill="#2563eb" text-anchor="start">Lado Rx → ALU: llegan A1 y B2, la ALU los lee más tarde</text>
+<line x1="170" y1="838" x2="170" y2="1078" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="240" y1="838" x2="240" y2="1078" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="310" y1="838" x2="310" y2="1078" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="380" y1="838" x2="380" y2="1078" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="450" y1="838" x2="450" y2="1078" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="520" y1="838" x2="520" y2="1078" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="590" y1="838" x2="590" y2="1078" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="660" y1="838" x2="660" y2="1078" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="730" y1="838" x2="730" y2="1078" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="800" y1="838" x2="800" y2="1078" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="870" y1="838" x2="870" y2="1078" stroke="#e5e7eb" stroke-width="1"/>
+<text x="205.0" y="848" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 0</text>
+<text x="275.0" y="848" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 1</text>
+<text x="345.0" y="848" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 2</text>
+<text x="415.0" y="848" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 3</text>
+<text x="485.0" y="848" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 4</text>
+<text x="555.0" y="848" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 5</text>
+<text x="625.0" y="848" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 6</text>
+<text x="695.0" y="848" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 7</text>
+<text x="765.0" y="848" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 8</text>
+<text x="835.0" y="848" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 9</text>
+<text x="30" y="886" font-size="12" font-weight="700" fill="#111827" text-anchor="start">rx_done_tick</text>
+<text x="30" y="932" font-size="12" font-weight="700" fill="#111827" text-anchor="start">rx_dout</text>
+<text x="30" y="978" font-size="12" font-weight="700" fill="#111827" text-anchor="start">rx_empty</text>
+<text x="30" y="1024" font-size="12" font-weight="700" fill="#111827" text-anchor="start">r_data</text>
+<text x="30" y="1066" font-size="12" font-weight="700" fill="#111827" text-anchor="start">rd</text>
+<polyline fill="none" stroke="#d97706" stroke-width="2.4" points="170,893 240,893 240,871 310,871 310,893 380,893 380,871 450,871 450,893 520,893 520,893 590,893 590,893 660,893 660,893 730,893 730,893 800,893 800,893 870,893"/>
+<line x1="170" y1="928" x2="240" y2="928" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polygon points="240,928 247,916.0 303,916.0 310,928 303,940.0 247,940.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="275.0" y="932.5" font-size="12" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">A1</text>
+<line x1="310" y1="928" x2="380" y2="928" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polygon points="380,928 387,916.0 443,916.0 450,928 443,940.0 387,940.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="415.0" y="932.5" font-size="12" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">B2</text>
+<line x1="450" y1="928" x2="870" y2="928" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polyline fill="none" stroke="#111827" stroke-width="2.4" points="170,963 240,963 240,963 310,963 310,985 380,985 380,985 450,985 450,985 520,985 520,985 590,985 590,985 660,985 660,985 730,985 730,963 800,963 800,963 870,963"/>
+<line x1="170" y1="1020" x2="310" y2="1020" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polygon points="310,1020 317,1008.0 583,1008.0 590,1020 583,1032.0 317,1032.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="450.0" y="1024.5" font-size="12" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">A1</text>
+<polygon points="590,1020 597,1008.0 723,1008.0 730,1020 723,1032.0 597,1032.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="660.0" y="1024.5" font-size="12" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">B2</text>
+<line x1="730" y1="1020" x2="870" y2="1020" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polyline fill="none" stroke="#d97706" stroke-width="2.4" points="170,1073 240,1073 240,1073 310,1073 310,1073 380,1073 380,1073 450,1073 450,1073 520,1073 520,1051 590,1051 590,1073 660,1073 660,1051 730,1051 730,1073 800,1073 800,1073 870,1073"/>
+<text x="275.0" y="865" font-size="9.5" font-weight="600" fill="#b45309" text-anchor="middle">se guarda A1</text>
+<text x="415.0" y="865" font-size="9.5" font-weight="600" fill="#b45309" text-anchor="middle">se guarda B2</text>
+<text x="555.0" y="1045" font-size="9.5" font-weight="600" fill="#b45309" text-anchor="middle">lee A1</text>
+<text x="695.0" y="1045" font-size="9.5" font-weight="600" fill="#b45309" text-anchor="middle">lee B2</text>
+<text x="314" y="957" font-size="9.5" font-weight="400" fill="#6b7280" text-anchor="start">← ya visible (1 ciclo después)</text>
+<text x="734" y="957" font-size="9.5" font-weight="400" fill="#6b7280" text-anchor="start">vacía de nuevo</text>
+<text x="878" y="1024" font-size="9.5" font-weight="400" fill="#6b7280" text-anchor="start">sigue A1 hasta rd</text>
+<text x="30" y="1113" font-size="12" font-weight="700" fill="#2563eb" text-anchor="start">Lado ALU → Tx: la ALU encola 11 y 22, el uart_tx los va enviando</text>
+<line x1="170" y1="1123" x2="170" y2="1363" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="240" y1="1123" x2="240" y2="1363" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="310" y1="1123" x2="310" y2="1363" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="380" y1="1123" x2="380" y2="1363" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="450" y1="1123" x2="450" y2="1363" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="520" y1="1123" x2="520" y2="1363" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="590" y1="1123" x2="590" y2="1363" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="660" y1="1123" x2="660" y2="1363" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="730" y1="1123" x2="730" y2="1363" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="800" y1="1123" x2="800" y2="1363" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="870" y1="1123" x2="870" y2="1363" stroke="#e5e7eb" stroke-width="1"/>
+<text x="205.0" y="1133" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 0</text>
+<text x="275.0" y="1133" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 1</text>
+<text x="345.0" y="1133" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 2</text>
+<text x="415.0" y="1133" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 3</text>
+<text x="485.0" y="1133" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 4</text>
+<text x="555.0" y="1133" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 5</text>
+<text x="625.0" y="1133" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 6</text>
+<text x="695.0" y="1133" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 7</text>
+<text x="765.0" y="1133" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 8</text>
+<text x="835.0" y="1133" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 9</text>
+<text x="30" y="1171" font-size="12" font-weight="700" fill="#111827" text-anchor="start">wr</text>
+<text x="30" y="1217" font-size="12" font-weight="700" fill="#111827" text-anchor="start">w_data</text>
+<text x="30" y="1263" font-size="12" font-weight="700" fill="#111827" text-anchor="start">tx_start</text>
+<text x="30" y="1309" font-size="12" font-weight="700" fill="#111827" text-anchor="start">tx_din</text>
+<text x="30" y="1351" font-size="12" font-weight="700" fill="#111827" text-anchor="start">tx_done_tick</text>
+<polyline fill="none" stroke="#d97706" stroke-width="2.4" points="170,1178 240,1178 240,1156 310,1156 310,1156 380,1156 380,1178 450,1178 450,1178 520,1178 520,1178 590,1178 590,1178 660,1178 660,1178 730,1178 730,1178 800,1178 800,1178 870,1178"/>
+<line x1="170" y1="1213" x2="240" y2="1213" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polygon points="240,1213 247,1201.0 303,1201.0 310,1213 303,1225.0 247,1225.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="275.0" y="1217.5" font-size="12" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">11</text>
+<polygon points="310,1213 317,1201.0 373,1201.0 380,1213 373,1225.0 317,1225.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="345.0" y="1217.5" font-size="12" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">22</text>
+<line x1="380" y1="1213" x2="870" y2="1213" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polyline fill="none" stroke="#111827" stroke-width="2.4" points="170,1270 240,1270 240,1270 310,1270 310,1248 380,1248 380,1248 450,1248 450,1248 520,1248 520,1248 590,1248 590,1248 660,1248 660,1270 730,1270 730,1270 800,1270 800,1270 870,1270"/>
+<line x1="170" y1="1305" x2="310" y2="1305" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polygon points="310,1305 317,1293.0 513,1293.0 520,1305 513,1317.0 317,1317.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="415.0" y="1309.5" font-size="12" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">11</text>
+<polygon points="520,1305 527,1293.0 653,1293.0 660,1305 653,1317.0 527,1317.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="590.0" y="1309.5" font-size="12" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">22</text>
+<line x1="660" y1="1305" x2="870" y2="1305" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polyline fill="none" stroke="#d97706" stroke-width="2.4" points="170,1358 240,1358 240,1358 310,1358 310,1358 380,1358 380,1358 450,1358 450,1336 520,1336 520,1358 590,1358 590,1336 660,1336 660,1358 730,1358 730,1358 800,1358 800,1358 870,1358"/>
+<text x="314" y="1242" font-size="9.5" font-weight="400" fill="#6b7280" text-anchor="start">← hay algo: el Tx puede arrancar</text>
+<text x="485.0" y="1330" font-size="9.5" font-weight="600" fill="#b45309" text-anchor="middle">terminó 11</text>
+<text x="625.0" y="1330" font-size="9.5" font-weight="600" fill="#b45309" text-anchor="middle">terminó 22</text>
+<text x="524" y="1286" font-size="9.5" font-weight="400" fill="#6b7280" text-anchor="start">← 11 descartado</text>
+<text x="664" y="1242" font-size="9.5" font-weight="400" fill="#6b7280" text-anchor="start">vacía: tx_start baja</text>
+<text x="30" y="1377" font-size="10" font-weight="400" fill="#6b7280" text-anchor="start">(En la realidad entre 'terminó 11' y el comienzo del byte siguiente pasan miles de ciclos; acá se comprimió para ver la secuencia.)</text>
+<text x="30" y="1417" font-size="14" font-weight="700" fill="#374151" text-anchor="start">D) Cosas para tener en cuenta</text>
+<text x="30" y="1443" font-size="11" font-weight="400" fill="#374151" text-anchor="start">• No tiene lógica propia: solo cablea dos sync_fifo y un inversor. Su valor es ordenar quién escribe y quién lee cada FIFO.</text>
+<text x="30" y="1462" font-size="11" font-weight="400" fill="#374151" text-anchor="start">• Las dos direcciones son independientes: se puede estar recibiendo un byte mientras se envía otro.</text>
+<text x="30" y="1481" font-size="11" font-weight="400" fill="#374151" text-anchor="start">• tx_start es un nivel (~tx_empty): se mantiene en 1 mientras queden bytes por enviar. El uart_tx lo mira solo en IDLE.</text>
+<text x="30" y="1500" font-size="11" font-weight="400" fill="#374151" text-anchor="start">• tx_done_tick es el 'rd' de la FIFO tx: descarta el byte enviado en el mismo flanco en que el uart_tx vuelve a IDLE.</text>
+<text x="30" y="1519" font-size="11" font-weight="400" fill="#374151" text-anchor="start">• tx_full frena a la ALU (espera en SEND, no pierde el resultado). rx_full solo avisa: si se llenara, los bytes nuevos se pierden.</text>
+</svg>

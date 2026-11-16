@@ -1,0 +1,9 @@
+vivado_proj/
+.Xil/
+build/*
+!build/*.rpt
+*.jou
+*.log
+*.str
+*.wdb
+__pycache__/

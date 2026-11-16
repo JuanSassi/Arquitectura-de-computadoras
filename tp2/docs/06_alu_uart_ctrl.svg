@@ -1,0 +1,279 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1829" font-family="Segoe UI, Arial, sans-serif">
+<rect width="1000" height="1829" fill="#ffffff"/>
+<text x="500" y="30" font-size="20" font-weight="700" fill="#111827" text-anchor="middle">Módulo 6: alu_uart_ctrl (controlador + ALU del TP1)</text>
+<text x="30" y="62" font-size="14" font-weight="700" fill="#374151" text-anchor="start">A) Entradas y salidas</text>
+<rect x="340" y="95" width="320" height="215" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<text x="500" y="125" font-size="17" font-weight="700" fill="#4c1d95" text-anchor="middle">alu_uart_ctrl</text>
+<text x="500" y="145" font-size="11" font-weight="400" fill="#4c1d95" text-anchor="middle">N = 8</text>
+<text x="500" y="175" font-size="11.5" font-weight="600" fill="#4c1d95" text-anchor="middle">FSM: A → B → OP → CALC → SEND</text>
+<text x="500" y="199" font-size="11" font-weight="400" fill="#4c1d95" text-anchor="middle">registros: a_reg  b_reg  op_reg  res_reg</text>
+<text x="500" y="223" font-size="11" font-weight="400" fill="#4c1d95" text-anchor="middle">+ instancia de la alu del TP1</text>
+<text x="500" y="255" font-size="11" font-weight="400" fill="#4c1d95" text-anchor="middle">rd y wr dependen de las entradas</text>
+<text x="500" y="270" font-size="11" font-weight="400" fill="#4c1d95" text-anchor="middle">(salidas tipo Mealy)</text>
+<line x1="420" y1="72" x2="420.0" y2="86.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="420.0,95.0 415.5,86.0 424.5,86.0" fill="#374151"/>
+<text x="420" y="66" font-size="12" font-weight="700" fill="#111827" text-anchor="middle">clk</text>
+<line x1="580" y1="72" x2="580.0" y2="86.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="580.0,95.0 575.5,86.0 584.5,86.0" fill="#374151"/>
+<text x="580" y="66" font-size="12" font-weight="700" fill="#111827" text-anchor="middle">reset</text>
+<text x="20" y="118" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="start">HACIA uart_interface (lado Rx)</text>
+<line x1="190" y1="145" x2="331.0" y2="145.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="340.0,145.0 331.0,149.5 331.0,140.5" fill="#374151"/>
+<text x="20" y="142" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">rx_empty</text>
+<text x="20" y="155" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">1 = no hay bytes que leer</text>
+<line x1="190" y1="190" x2="331.0" y2="190.0" stroke="#374151" stroke-width="3"/>
+<polygon points="340.0,190.0 331.0,194.5 331.0,185.5" fill="#374151"/>
+<text x="20" y="187" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">r_data[7:0]</text>
+<text x="20" y="200" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">byte más viejo recibido</text>
+<line x1="340" y1="235" x2="199.0" y2="235.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="190.0,235.0 199.0,230.5 199.0,239.5" fill="#374151"/>
+<text x="20" y="232" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">rd</text>
+<text x="20" y="245" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">consumí r_data (pulso)</text>
+<text x="810" y="118" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="start">HACIA uart_interface (lado Tx)</text>
+<line x1="790" y1="145" x2="669.0" y2="145.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="660.0,145.0 669.0,140.5 669.0,149.5" fill="#374151"/>
+<text x="800" y="142" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">tx_full</text>
+<text x="800" y="155" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">1 = esperar antes de escribir</text>
+<line x1="660" y1="190" x2="781.0" y2="190.0" stroke="#374151" stroke-width="3"/>
+<polygon points="790.0,190.0 781.0,194.5 781.0,185.5" fill="#374151"/>
+<text x="800" y="187" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">w_data[7:0]</text>
+<text x="800" y="200" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">el resultado a enviar</text>
+<line x1="660" y1="235" x2="781.0" y2="235.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="790.0,235.0 781.0,239.5 781.0,230.5" fill="#374151"/>
+<text x="800" y="232" font-size="12.5" font-weight="700" fill="#111827" text-anchor="start">wr</text>
+<text x="800" y="245" font-size="10" font-weight="#6b7280" fill="#111827" text-anchor="start">encolar w_data (pulso)</text>
+<line x1="430" y1="310" x2="430.0" y2="339.0" stroke="#374151" stroke-width="3"/>
+<polygon points="430.0,348.0 425.5,339.0 434.5,339.0" fill="#374151"/>
+<text x="430" y="362" font-size="11.5" font-weight="700" fill="#111827" text-anchor="middle">result[7:0]</text>
+<text x="430" y="376" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">último resultado (LEDs)</text>
+<line x1="570" y1="310" x2="570.0" y2="339.0" stroke="#374151" stroke-width="2.4"/>
+<polygon points="570.0,348.0 565.5,339.0 574.5,339.0" fill="#374151"/>
+<text x="570" y="362" font-size="11.5" font-weight="700" fill="#111827" text-anchor="middle">state_dbg[2:0]</text>
+<text x="570" y="376" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">estado actual (debug)</text>
+<text x="30" y="430" font-size="14" font-weight="700" fill="#374151" text-anchor="start">B) Diagrama de estados</text>
+<circle cx="110" cy="595" r="44" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.4"/>
+<text x="110" y="600" font-size="15" font-weight="700" fill="#111827" text-anchor="middle">A</text>
+<circle cx="300" cy="595" r="44" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.4"/>
+<text x="300" y="600" font-size="15" font-weight="700" fill="#111827" text-anchor="middle">B</text>
+<circle cx="490" cy="595" r="44" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.4"/>
+<text x="490" y="600" font-size="15" font-weight="700" fill="#111827" text-anchor="middle">OP</text>
+<circle cx="680" cy="595" r="44" fill="#fef3c7" stroke="#d97706" stroke-width="2.4"/>
+<text x="680" y="600" font-size="15" font-weight="700" fill="#111827" text-anchor="middle">CALC</text>
+<circle cx="870" cy="595" r="44" fill="#dcfce7" stroke="#16a34a" stroke-width="2.4"/>
+<text x="870" y="600" font-size="15" font-weight="700" fill="#111827" text-anchor="middle">SEND</text>
+<line x1="20" y1="595" x2="57.0" y2="595.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="66.0,595.0 57.0,599.5 57.0,590.5" fill="#374151"/>
+<text x="20" y="587" font-size="11" font-weight="600" fill="#6b7280" text-anchor="start">reset</text>
+<path d="M 88 557 C 55 460, 165 460, 132 557" fill="none" stroke="#374151" stroke-width="1.8"/>
+<polygon points="132.0,557.0 130.6,547.0 139.2,549.9" fill="#374151"/>
+<text x="110" y="457" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">rx_empty = 1</text>
+<text x="110" y="471" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="middle">espera el byte</text>
+<path d="M 278 557 C 245 460, 355 460, 322 557" fill="none" stroke="#374151" stroke-width="1.8"/>
+<polygon points="322.0,557.0 320.6,547.0 329.2,549.9" fill="#374151"/>
+<text x="300" y="457" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">rx_empty = 1</text>
+<text x="300" y="471" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="middle">espera el byte</text>
+<path d="M 468 557 C 435 460, 545 460, 512 557" fill="none" stroke="#374151" stroke-width="1.8"/>
+<polygon points="512.0,557.0 510.6,547.0 519.2,549.9" fill="#374151"/>
+<text x="490" y="457" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">rx_empty = 1</text>
+<text x="490" y="471" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="middle">espera el byte</text>
+<path d="M 848 557 C 815 460, 925 460, 892 557" fill="none" stroke="#374151" stroke-width="1.8"/>
+<polygon points="892.0,557.0 890.6,547.0 899.2,549.9" fill="#374151"/>
+<text x="870" y="457" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">tx_full = 1</text>
+<text x="870" y="471" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="middle">espera lugar</text>
+<line x1="154" y1="595" x2="247.0" y2="595.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="256.0,595.0 247.0,599.5 247.0,590.5" fill="#374151"/>
+<text x="205.0" y="583" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">!rx_empty</text>
+<text x="205.0" y="615" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">rd = 1</text>
+<text x="205.0" y="628" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">a_reg ← r_data</text>
+<line x1="344" y1="595" x2="437.0" y2="595.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="446.0,595.0 437.0,599.5 437.0,590.5" fill="#374151"/>
+<text x="395.0" y="583" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">!rx_empty</text>
+<text x="395.0" y="615" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">rd = 1</text>
+<text x="395.0" y="628" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">b_reg ← r_data</text>
+<line x1="534" y1="595" x2="627.0" y2="595.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="636.0,595.0 627.0,599.5 627.0,590.5" fill="#374151"/>
+<text x="585.0" y="583" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">!rx_empty</text>
+<text x="585.0" y="615" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">rd = 1</text>
+<text x="585.0" y="628" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">op_reg ← r_data[5:0]</text>
+<line x1="724" y1="595" x2="817.0" y2="595.0" stroke="#374151" stroke-width="1.8"/>
+<polygon points="826.0,595.0 817.0,599.5 817.0,590.5" fill="#374151"/>
+<text x="775.0" y="583" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">siempre</text>
+<text x="775.0" y="615" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">res_reg ←</text>
+<text x="775.0" y="628" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">alu_result</text>
+<path d="M 870 639 Q 490 785 110 639" fill="none" stroke="#374151" stroke-width="1.8"/>
+<polygon points="110.0,639.0 120.0,638.0 116.8,646.4" fill="#374151"/>
+<text x="490" y="760" font-size="11" font-weight="600" fill="#111827" text-anchor="middle">!tx_full   →   wr = 1,  w_data = res_reg</text>
+<text x="490" y="776" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="middle">(el resultado sale hacia la FIFO tx y la FSM vuelve a esperar un nuevo comando)</text>
+<text x="490" y="792" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">cualquier otro valor de state_reg (default) → A</text>
+<text x="30" y="835" font-size="14" font-weight="700" fill="#374151" text-anchor="start">C) Camino de datos: qué registro se carga en cada estado</text>
+<line x1="40" y1="947" x2="191.0" y2="947.0" stroke="#374151" stroke-width="3"/>
+<polygon points="200.0,947.0 191.0,951.5 191.0,942.5" fill="#374151"/>
+<text x="40" y="937" font-size="11.5" font-weight="700" fill="#111827" text-anchor="start">r_data[7:0]</text>
+<line x1="200" y1="887" x2="200" y2="1007" stroke="#374151" stroke-width="3"/>
+<rect x="230" y="865" width="190" height="44" rx="6" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.8"/>
+<text x="325" y="883" font-size="12.5" font-weight="700" fill="#111827" text-anchor="middle">a_reg</text>
+<text x="325" y="898" font-size="8.5" font-weight="400" fill="#6b7280" text-anchor="middle">se carga con r_data  (si rd y estado = A)</text>
+<line x1="200" y1="887" x2="221.0" y2="887.0" stroke="#374151" stroke-width="2.4"/>
+<polygon points="230.0,887.0 221.0,891.5 221.0,882.5" fill="#374151"/>
+<rect x="230" y="925" width="190" height="44" rx="6" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.8"/>
+<text x="325" y="943" font-size="12.5" font-weight="700" fill="#111827" text-anchor="middle">b_reg</text>
+<text x="325" y="958" font-size="8.5" font-weight="400" fill="#6b7280" text-anchor="middle">se carga con r_data  (si rd y estado = B)</text>
+<line x1="200" y1="947" x2="221.0" y2="947.0" stroke="#374151" stroke-width="2.4"/>
+<polygon points="230.0,947.0 221.0,951.5 221.0,942.5" fill="#374151"/>
+<rect x="230" y="985" width="190" height="44" rx="6" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.8"/>
+<text x="325" y="1003" font-size="12.5" font-weight="700" fill="#111827" text-anchor="middle">op_reg (6 bits)</text>
+<text x="325" y="1018" font-size="8.5" font-weight="400" fill="#6b7280" text-anchor="middle">se carga con r_data[5:0]  (si rd y estado = OP)</text>
+<line x1="200" y1="1007" x2="221.0" y2="1007.0" stroke="#374151" stroke-width="2.4"/>
+<polygon points="230.0,1007.0 221.0,1011.5 221.0,1002.5" fill="#374151"/>
+<rect x="540" y="855" width="170" height="190" rx="8" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+<text x="625" y="883" font-size="14" font-weight="700" fill="#4c1d95" text-anchor="middle">alu (TP1)</text>
+<text x="625" y="903" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="middle">N = 8, combinacional</text>
+<text x="625" y="927" font-size="11" font-weight="600" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">case (op)</text>
+<text x="625" y="945" font-size="10.5" font-weight="400" fill="#111827" text-anchor="middle">ADD SUB AND OR</text>
+<text x="625" y="960" font-size="10.5" font-weight="400" fill="#111827" text-anchor="middle">XOR NOR SRL SRA</text>
+<text x="625" y="980" font-size="10.5" font-weight="400" fill="#111827" text-anchor="middle">otro código → 0</text>
+<text x="625" y="1010" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">zero y overflow existen,</text>
+<text x="625" y="1024" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">pero acá no se usan</text>
+<line x1="420" y1="887" x2="531.0" y2="894.4" stroke="#374151" stroke-width="2.4"/>
+<polygon points="540.0,895.0 530.7,898.9 531.3,889.9" fill="#374151"/>
+<text x="470" y="870" font-size="11" font-weight="700" fill="#111827" text-anchor="start">a</text>
+<line x1="420" y1="947" x2="531.0" y2="945.1" stroke="#374151" stroke-width="2.4"/>
+<polygon points="540.0,945.0 531.1,949.6 530.9,940.7" fill="#374151"/>
+<text x="470" y="937" font-size="11" font-weight="700" fill="#111827" text-anchor="start">b</text>
+<line x1="420" y1="1007" x2="531.0" y2="1000.5" stroke="#374151" stroke-width="2.4"/>
+<polygon points="540.0,1000.0 531.3,1005.0 530.8,996.0" fill="#374151"/>
+<text x="470" y="999" font-size="11" font-weight="700" fill="#111827" text-anchor="start">op</text>
+<rect x="790" y="915" width="140" height="56" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.8"/>
+<text x="860" y="937" font-size="12.5" font-weight="700" fill="#111827" text-anchor="middle">res_reg</text>
+<text x="860" y="955" font-size="10" font-weight="400" fill="#6b7280" text-anchor="middle">se carga en CALC</text>
+<line x1="710" y1="943" x2="781.0" y2="943.0" stroke="#374151" stroke-width="3"/>
+<polygon points="790.0,943.0 781.0,947.5 781.0,938.5" fill="#374151"/>
+<text x="750" y="933" font-size="11" font-weight="700" fill="#111827" text-anchor="middle">result</text>
+<line x1="930" y1="943" x2="971.0" y2="943.0" stroke="#374151" stroke-width="3"/>
+<polygon points="980.0,943.0 971.0,947.5 971.0,938.5" fill="#374151"/>
+<text x="955" y="931" font-size="10.5" font-weight="700" fill="#111827" text-anchor="middle">w_data</text>
+<text x="30" y="1080" font-size="14" font-weight="700" fill="#374151" text-anchor="start">D) Un comando completo: 100 ADD 27  →  bytes 0x64, 0x1B, 0x20 en la FIFO  →  resultado 0x7F</text>
+<line x1="170" y1="1110" x2="170" y2="1462" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="280" y1="1110" x2="280" y2="1462" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="390" y1="1110" x2="390" y2="1462" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="500" y1="1110" x2="500" y2="1462" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="610" y1="1110" x2="610" y2="1462" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="720" y1="1110" x2="720" y2="1462" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="830" y1="1110" x2="830" y2="1462" stroke="#e5e7eb" stroke-width="1"/>
+<text x="225.0" y="1120" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 0</text>
+<text x="335.0" y="1120" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 1</text>
+<text x="445.0" y="1120" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 2</text>
+<text x="555.0" y="1120" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 3</text>
+<text x="665.0" y="1120" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 4</text>
+<text x="775.0" y="1120" font-size="10" font-weight="600" fill="#6b7280" text-anchor="middle">ciclo 5</text>
+<text x="30" y="1153" font-size="12" font-weight="700" fill="#111827" text-anchor="start">estado</text>
+<text x="30" y="1189" font-size="12" font-weight="700" fill="#111827" text-anchor="start">rx_empty</text>
+<text x="30" y="1225" font-size="12" font-weight="700" fill="#111827" text-anchor="start">r_data</text>
+<text x="30" y="1261" font-size="12" font-weight="700" fill="#111827" text-anchor="start">rd</text>
+<text x="30" y="1297" font-size="12" font-weight="700" fill="#111827" text-anchor="start">a_reg</text>
+<text x="30" y="1333" font-size="12" font-weight="700" fill="#111827" text-anchor="start">b_reg</text>
+<text x="30" y="1369" font-size="12" font-weight="700" fill="#111827" text-anchor="start">op_reg</text>
+<text x="30" y="1405" font-size="12" font-weight="700" fill="#111827" text-anchor="start">res_reg</text>
+<text x="30" y="1441" font-size="12" font-weight="700" fill="#111827" text-anchor="start">wr</text>
+<rect x="170" y="1135" width="110" height="26" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="225.0" y="1152" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">A: lee 0x64</text>
+<rect x="280" y="1135" width="110" height="26" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="335.0" y="1152" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">B: lee 0x1B</text>
+<rect x="390" y="1135" width="110" height="26" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="445.0" y="1152" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">OP: lee 0x20</text>
+<rect x="500" y="1135" width="110" height="26" fill="#fef3c7" stroke="#d97706" stroke-width="1.4"/>
+<text x="555.0" y="1152" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">CALC</text>
+<rect x="610" y="1135" width="110" height="26" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="665.0" y="1152" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">SEND</text>
+<rect x="720" y="1135" width="110" height="26" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="775.0" y="1152" font-size="10.5" font-weight="600" fill="#111827" text-anchor="middle">A (espera)</text>
+<polyline fill="none" stroke="#111827" stroke-width="2.4" points="170,1194 280,1194 280,1194 390,1194 390,1194 500,1194 500,1174 610,1174 610,1174 720,1174 720,1174 830,1174"/>
+<polygon points="170,1220 177,1209.0 273,1209.0 280,1220 273,1231.0 177,1231.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="225.0" y="1224.5" font-size="12" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">64</text>
+<polygon points="280,1220 287,1209.0 383,1209.0 390,1220 383,1231.0 287,1231.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="335.0" y="1224.5" font-size="12" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">1B</text>
+<polygon points="390,1220 397,1209.0 493,1209.0 500,1220 493,1231.0 397,1231.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="445.0" y="1224.5" font-size="12" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">20</text>
+<line x1="500" y1="1220" x2="830" y2="1220" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polyline fill="none" stroke="#d97706" stroke-width="2.4" points="170,1246 280,1246 280,1246 390,1246 390,1246 500,1246 500,1266 610,1266 610,1266 720,1266 720,1266 830,1266"/>
+<polygon points="170,1292 177,1281.0 273,1281.0 280,1292 273,1303.0 177,1303.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="225.0" y="1296.5" font-size="11" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">00</text>
+<polygon points="280,1292 287,1281.0 823,1281.0 830,1292 823,1303.0 287,1303.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="555.0" y="1296.5" font-size="11" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">64</text>
+<polygon points="170,1328 177,1317.0 383,1317.0 390,1328 383,1339.0 177,1339.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="280.0" y="1332.5" font-size="11" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">00</text>
+<polygon points="390,1328 397,1317.0 823,1317.0 830,1328 823,1339.0 397,1339.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="610.0" y="1332.5" font-size="11" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">1B</text>
+<polygon points="170,1364 177,1353.0 493,1353.0 500,1364 493,1375.0 177,1375.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="335.0" y="1368.5" font-size="10" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">000000</text>
+<polygon points="500,1364 507,1353.0 823,1353.0 830,1364 823,1375.0 507,1375.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="665.0" y="1368.5" font-size="10" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">100000</text>
+<polygon points="170,1400 177,1389.0 603,1389.0 610,1400 603,1411.0 177,1411.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="390.0" y="1404.5" font-size="11" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">00</text>
+<polygon points="610,1400 617,1389.0 823,1389.0 830,1400 823,1411.0 617,1411.0" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+<text x="720.0" y="1404.5" font-size="11" font-weight="700" fill="#111827" text-anchor="middle" font-family="Consolas, monospace">7F</text>
+<polyline fill="none" stroke="#d97706" stroke-width="2.4" points="170,1446 280,1446 280,1446 390,1446 390,1446 500,1446 500,1446 610,1446 610,1426 720,1426 720,1446 830,1446"/>
+<text x="506" y="1170" font-size="9.5" font-weight="400" fill="#6b7280" text-anchor="start">FIFO vacía tras leer el 3º</text>
+<text x="225.0" y="1242" font-size="9.5" font-weight="400" fill="#6b7280" text-anchor="start">rd = 1 mientras haya byte</text>
+<text x="665.0" y="1422" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">wr: sale 0x7F</text>
+<text x="838" y="1296" font-size="9.5" font-weight="400" fill="#6b7280" text-anchor="start">se carga al final del ciclo 0</text>
+<text x="838" y="1404" font-size="9.5" font-weight="400" fill="#6b7280" text-anchor="start">se carga al final de CALC</text>
+<text x="30" y="1486" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="start">Con la FIFO ya llena de bytes, la FSM lee uno por ciclo. En la práctica los bytes llegan cada ~520 µs, y cada estado A, B u OP se queda esperando</text>
+<text x="30" y="1501" font-size="10.5" font-weight="400" fill="#6b7280" text-anchor="start">(lazo sobre sí mismo) hasta que rx_empty = 0. Los valores de la tabla son los que se ven DESPUÉS del flanco de reloj de cada ciclo.</text>
+<text x="30" y="1541" font-size="14" font-weight="700" fill="#374151" text-anchor="start">E) Operaciones de la ALU (códigos del TP1; el byte OP usa solo sus 6 bits bajos)</text>
+<rect x="30" y="1552" width="940" height="24" fill="#f3f4f6"/>
+<text x="40" y="1569" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">operación</text>
+<text x="140" y="1569" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">op[5:0]</text>
+<text x="250" y="1569" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">byte OP</text>
+<text x="340" y="1569" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">qué calcula</text>
+<text x="620" y="1569" font-size="11.5" font-weight="700" fill="#374151" text-anchor="start">ejemplo</text>
+<text x="40" y="1593" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start">ADD</text>
+<text x="140" y="1593" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">100000</text>
+<text x="250" y="1593" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0x20</text>
+<text x="340" y="1593" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">a + b</text>
+<text x="620" y="1593" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">100 + 27 = 127 (0x7F)</text>
+<rect x="30" y="1601" width="940" height="23" fill="#fafafa"/>
+<text x="40" y="1617" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start">SUB</text>
+<text x="140" y="1617" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">100010</text>
+<text x="250" y="1617" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0x22</text>
+<text x="340" y="1617" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">a − b</text>
+<text x="620" y="1617" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">5 − 10 = 251 (0xFB, o sea −5)</text>
+<text x="40" y="1641" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start">AND</text>
+<text x="140" y="1641" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">100100</text>
+<text x="250" y="1641" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0x24</text>
+<text x="340" y="1641" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">a &amp; b</text>
+<text x="620" y="1641" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">0xF0 &amp; 0x3C = 0x30</text>
+<rect x="30" y="1649" width="940" height="23" fill="#fafafa"/>
+<text x="40" y="1665" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start">OR</text>
+<text x="140" y="1665" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">100101</text>
+<text x="250" y="1665" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0x25</text>
+<text x="340" y="1665" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">a | b</text>
+<text x="620" y="1665" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">0xF0 | 0x0F = 0xFF</text>
+<text x="40" y="1689" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start">XOR</text>
+<text x="140" y="1689" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">100110</text>
+<text x="250" y="1689" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0x26</text>
+<text x="340" y="1689" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">a ^ b</text>
+<text x="620" y="1689" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">0xFF ^ 0x0F = 0xF0</text>
+<rect x="30" y="1697" width="940" height="23" fill="#fafafa"/>
+<text x="40" y="1713" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start">NOR</text>
+<text x="140" y="1713" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">100111</text>
+<text x="250" y="1713" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0x27</text>
+<text x="340" y="1713" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">~(a | b)</text>
+<text x="620" y="1713" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">~(0xF0 | 0x0F) = 0x00</text>
+<text x="40" y="1737" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start">SRL</text>
+<text x="140" y="1737" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">000010</text>
+<text x="250" y="1737" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0x02</text>
+<text x="340" y="1737" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">b &gt;&gt; a[2:0]  (relleno con ceros)</text>
+<text x="620" y="1737" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">a = 3, b = 0xF0  →  0x1E</text>
+<rect x="30" y="1745" width="940" height="23" fill="#fafafa"/>
+<text x="40" y="1761" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start">SRA</text>
+<text x="140" y="1761" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">000011</text>
+<text x="250" y="1761" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">0x03</text>
+<text x="340" y="1761" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">b &gt;&gt;&gt; a[2:0]  (extiende el signo)</text>
+<text x="620" y="1761" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">a = 3, b = 0xF0  →  0xFE</text>
+<text x="40" y="1785" font-size="11.5" font-weight="600" fill="#111827" text-anchor="start">otro</text>
+<text x="140" y="1785" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">—</text>
+<text x="250" y="1785" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start" font-family="Consolas, monospace">—</text>
+<text x="340" y="1785" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">0</text>
+<text x="620" y="1785" font-size="11.5" font-weight="400" fill="#111827" text-anchor="start">código inválido → 0x00</text>
+</svg>
